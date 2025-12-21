@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "cavern-chat",
+  "version": "${version}",
+  "name": "cavern-chat",
+  "description": "A mod to seperate diffrent chat channels in The Cavern Minecraft Server.",
+  "authors": [ "McShinyShoe" ],
+  "contact": {
+    "homepage": "https://mods.shinyshoe.net/cavern-chat",
+    "sources": "https://giuthub.com/McShinyShoe/cavern-chat"
+  },
+  "license": "MIT",
+  "icon": "assets/cavern-chat/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "fabric-datagen": [
+      "net.shinyshoe.cavernChat.client.CavernChatDataGenerator"
+    ],
+    "client": [
+      "net.shinyshoe.cavernChat.client.CavernChatClient"
+    ],
+    "main": [
+      "net.shinyshoe.cavernChat.CavernChat"
+    ]
+  },
+  "mixins": [
+    "cavern-chat.mixins.json",
+    {
+      "config": "cavern-chat.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
