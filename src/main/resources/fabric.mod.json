@@ -3,7 +3,7 @@
   "id": "cavern-chat",
   "version": "${version}",
   "name": "cavern-chat",
-  "description": "A mod to seperate diffrent chat channels in The Cavern Minecraft Server.",
+  "description": "A mod to separate different chat channels in The Cavern Minecraft Server.",
   "authors": [ "McShinyShoe" ],
   "contact": {
     "homepage": "https://mods.shinyshoe.net/cavern-chat",
