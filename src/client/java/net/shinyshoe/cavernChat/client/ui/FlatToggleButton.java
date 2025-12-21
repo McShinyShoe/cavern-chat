@@ -11,50 +11,70 @@ import net.minecraft.text.Text;
 public class FlatToggleButton extends ClickableWidget {
 
     private boolean enabled;
-    private final Text labelActive, labelInctive;
+    private final Text labelActive, labelInactive;
     private final int colorActive, colorInactive;
+    private final Runnable onEnable;
+    private final Runnable onDisable;
 
-    public FlatToggleButton(int x, int y, Text label, int width, int height) {
+    public FlatToggleButton(int x, int y, boolean enabled, Text label, int width, int height, Runnable onEnable, Runnable onDisable) {
         super(x, y, width, height, Text.empty());
+        this.enabled = enabled;
         this.labelActive = label;
-        this.labelInctive = label;
+        this.labelInactive = label;
         colorActive = 0xFFFFFFFF;
         colorInactive = 0xFFAAAAAA;
+        this.onEnable = onEnable;
+        this.onDisable = onDisable;
     }
-    public FlatToggleButton(int x, int y, Text labelActive, Text labelInctive, int width, int height) {
+    public FlatToggleButton(int x, int y, boolean enabled, Text labelActive, Text labelInactive, int width, int height, Runnable onEnable, Runnable onDisable) {
         super(x, y, width, height, Text.empty());
+        this.enabled = enabled;
         this.labelActive = labelActive;
-        this.labelInctive = labelInctive;
+        this.labelInactive = labelInactive;
         colorActive = 0xFFFFFFFF;
         colorInactive = 0xFFAAAAAA;
+        this.onEnable = onEnable;
+        this.onDisable = onDisable;
     }
-    public FlatToggleButton(int x, int y, Text label, int color, int width, int height) {
+    public FlatToggleButton(int x, int y, boolean enabled, Text label, int color, int width, int height, Runnable onEnable, Runnable onDisable) {
         super(x, y, width, height, Text.empty());
+        this.enabled = enabled;
         this.labelActive = label;
-        this.labelInctive = label;
+        this.labelInactive = label;
         this.colorActive = color;
         this.colorInactive = 0xFFAAAAAA;
+        this.onEnable = onEnable;
+        this.onDisable = onDisable;
     }
-    public FlatToggleButton(int x, int y, Text labelActive, Text labelInctive, int color, int width, int height) {
+    public FlatToggleButton(int x, int y, boolean enabled, Text labelActive, Text labelInactive, int color, int width, int height, Runnable onEnable, Runnable onDisable) {
         super(x, y, width, height, Text.empty());
+        this.enabled = enabled;
         this.labelActive = labelActive;
-        this.labelInctive = labelInctive;
+        this.labelInactive = labelInactive;
         this.colorActive = color;
         this.colorInactive = 0xFFAAAAAA;
+        this.onEnable = onEnable;
+        this.onDisable = onDisable;
     }
-    public FlatToggleButton(int x, int y, Text label, int colorActive, int colorInactive, int width, int height) {
+    public FlatToggleButton(int x, int y, boolean enabled, Text label, int colorActive, int colorInactive, int width, int height, Runnable onEnable, Runnable onDisable) {
         super(x, y, width, height, Text.empty());
+        this.enabled = enabled;
         this.labelActive = label;
-        this.labelInctive = label;
+        this.labelInactive = label;
         this.colorActive = colorActive;
         this.colorInactive = colorInactive;
+        this.onEnable = onEnable;
+        this.onDisable = onDisable;
     }
-    public FlatToggleButton(int x, int y, Text labelActive, Text labelInctive, int colorActive, int colorInactive, int width, int height) {
+    public FlatToggleButton(int x, int y, boolean enabled, Text labelActive, Text labelInactive, int colorActive, int colorInactive, int width, int height, Runnable onEnable, Runnable onDisable) {
         super(x, y, width, height, Text.empty());
+        this.enabled = enabled;
         this.labelActive = labelActive;
-        this.labelInctive = labelInctive;
+        this.labelInactive = labelInactive;
         this.colorActive = colorActive;
         this.colorInactive = colorInactive;
+        this.onEnable = onEnable;
+        this.onDisable = onDisable;
     }
 
     @Override
@@ -70,7 +90,7 @@ public class FlatToggleButton extends ClickableWidget {
 
         ctx.drawCenteredTextWithShadow(
                 client.textRenderer,
-                enabled ? labelActive : labelInctive,
+                enabled ? labelActive : labelInactive,
                 textX,
                 textY,
                 enabled ? colorActive: colorInactive
@@ -80,6 +100,12 @@ public class FlatToggleButton extends ClickableWidget {
     @Override
     public void onClick(Click click, boolean doubled) {
         enabled = !enabled;
+        if(enabled) {
+            onEnable.run();
+        }
+        else {
+            onDisable.run();
+        }
     }
 
     @Override

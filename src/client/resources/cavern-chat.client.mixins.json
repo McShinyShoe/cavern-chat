@@ -4,6 +4,8 @@
   "package": "net.shinyshoe.cavernChat.mixin.client",
   "compatibilityLevel": "JAVA_21",
   "client": [
+    "ChatHudAccessor",
+    "ChatHudMixin",
     "ChatScreenMixin",
     "ScreenAccessor"
   ],
