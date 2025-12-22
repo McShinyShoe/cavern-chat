@@ -36,12 +36,7 @@ public final class ChatVisibilityController {
                 if(!filter.getStatus()) continue;
                 if(filter.checkText(chatHudLine.content())) passFilter = true;
             }
-            if(!passFilter) {
-                CavernChat.LOGGER.info("DENY \"{}\"", chatHudLine.content().getString());
-                continue;
-            } else {
-                CavernChat.LOGGER.info("PASS \"{}\"", chatHudLine.content().getString());
-            }
+            if(!passFilter) continue;
             acc.getVisibleMessages().addFirst( new ChatHudLine.Visible(
                     chatHudLine.creationTick(),
                     chatHudLine.content().asOrderedText(),
