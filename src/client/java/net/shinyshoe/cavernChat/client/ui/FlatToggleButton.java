@@ -106,6 +106,7 @@ public class FlatToggleButton extends ClickableWidget {
         else {
             onDisable.run();
         }
+        this.setFocused(false);
     }
 
     @Override
@@ -118,5 +119,17 @@ public class FlatToggleButton extends ClickableWidget {
 
     public boolean isEnabled() {
         return enabled;
+    }
+
+    @Override
+    public net.minecraft.client.gui.navigation.GuiNavigationPath getNavigationPath(net.minecraft.client.gui.navigation.GuiNavigation navigation) {
+        return null;
+    }
+
+    @Override
+    public void setFocused(boolean focused) {
+        if (!focused) {
+            super.setFocused(false);
+        }
     }
 }
