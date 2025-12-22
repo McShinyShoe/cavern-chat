@@ -37,12 +37,7 @@ public final class ChatVisibilityController {
                 if(filter.checkText(chatHudLine.content())) passFilter = true;
             }
             if(!passFilter) continue;
-            acc.getVisibleMessages().addFirst( new ChatHudLine.Visible(
-                    chatHudLine.creationTick(),
-                    chatHudLine.content().asOrderedText(),
-                    chatHudLine.indicator(),
-                    true
-            ));
+            acc.invokeAddVisibleMessage(chatHudLine);
         }
     }
 
