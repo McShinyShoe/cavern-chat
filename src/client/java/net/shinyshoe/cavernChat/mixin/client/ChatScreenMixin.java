@@ -1,7 +1,9 @@
 package net.shinyshoe.cavernChat.mixin.client;
 
 import net.minecraft.client.gui.screen.ChatScreen;
+import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.Text;
+import net.shinyshoe.cavernChat.client.ChatChannel;
 import net.shinyshoe.cavernChat.client.ChatFilter;
 import net.shinyshoe.cavernChat.client.ui.FlatToggleButton;
 import org.spongepowered.asm.mixin.Mixin;
@@ -9,12 +11,31 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.lang.reflect.Field;
+
 @Mixin(ChatScreen.class)
 public abstract class ChatScreenMixin {
 
     @Inject(method = "init", at = @At("TAIL"))
     private void cavernChat$init(CallbackInfo ci) {
         ChatScreen self = (ChatScreen)(Object)this;
+
+        for (Field field : ChatScreen.class.getDeclaredFields()) {
+            if (TextFieldWidget.class.isAssignableFrom(field.getType())) {
+                field.setAccessible(true);
+                try {
+                    TextFieldWidget input = (TextFieldWidget) field.get(self);
+                    ChatChannel channel = ChatChannel.getCurrentActiveChannel();
+                    if(channel == null) channel = ChatChannel.getCurrentDefaultChannel();
+                    if(channel == null) break;
+
+                    if (input != null) {
+                        input.setEditableColor(0xFF000000 + channel.color());
+                    }
+                } catch (IllegalAccessException ignored) {}
+                break;
+            }
+        }
 
         FlatToggleButton buttonGlobal = new FlatToggleButton(
                 2,
