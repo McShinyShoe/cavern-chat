@@ -79,8 +79,7 @@ public class FlatToggleButton extends ClickableWidget {
 
     @Override
     protected void renderWidget(DrawContext ctx, int mouseX, int mouseY, float delta) {
-        // Black background, 80% opacity
-        int bgColor = 0x80000000;
+        int bgColor = this.isHovered() ?  0x80080808 : 0x80000000;
         ctx.fill(getX(), getY(), getX() + width, getY() + height, bgColor);
 
         int textX = getX() + width / 2;
