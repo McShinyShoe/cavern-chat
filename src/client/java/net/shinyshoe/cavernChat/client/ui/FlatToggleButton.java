@@ -15,8 +15,10 @@ public class FlatToggleButton extends ClickableWidget {
     private final int colorActive, colorInactive;
     private final Runnable onEnable;
     private final Runnable onDisable;
+    private final Runnable onShiftClick;
+    private final Runnable onCtrlClick;
 
-    public FlatToggleButton(int x, int y, boolean enabled, Text label, int width, int height, Runnable onEnable, Runnable onDisable) {
+    public FlatToggleButton(int x, int y, boolean enabled, Text label, int width, int height, Runnable onEnable, Runnable onDisable, Runnable onShiftClick, Runnable onCtrlClick) {
         super(x, y, width, height, Text.empty());
         this.enabled = enabled;
         this.labelActive = label;
@@ -25,8 +27,10 @@ public class FlatToggleButton extends ClickableWidget {
         colorInactive = 0xFFAAAAAA;
         this.onEnable = onEnable;
         this.onDisable = onDisable;
+        this.onShiftClick = onShiftClick;
+        this.onCtrlClick = onCtrlClick;
     }
-    public FlatToggleButton(int x, int y, boolean enabled, Text labelActive, Text labelInactive, int width, int height, Runnable onEnable, Runnable onDisable) {
+    public FlatToggleButton(int x, int y, boolean enabled, Text labelActive, Text labelInactive, int width, int height, Runnable onEnable, Runnable onDisable, Runnable onShiftClick, Runnable onCtrlClick) {
         super(x, y, width, height, Text.empty());
         this.enabled = enabled;
         this.labelActive = labelActive;
@@ -35,8 +39,10 @@ public class FlatToggleButton extends ClickableWidget {
         colorInactive = 0xFFAAAAAA;
         this.onEnable = onEnable;
         this.onDisable = onDisable;
+        this.onShiftClick = onShiftClick;
+        this.onCtrlClick = onCtrlClick;
     }
-    public FlatToggleButton(int x, int y, boolean enabled, Text label, int color, int width, int height, Runnable onEnable, Runnable onDisable) {
+    public FlatToggleButton(int x, int y, boolean enabled, Text label, int color, int width, int height, Runnable onEnable, Runnable onDisable, Runnable onShiftClick, Runnable onCtrlClick) {
         super(x, y, width, height, Text.empty());
         this.enabled = enabled;
         this.labelActive = label;
@@ -45,8 +51,10 @@ public class FlatToggleButton extends ClickableWidget {
         this.colorInactive = 0xFFAAAAAA;
         this.onEnable = onEnable;
         this.onDisable = onDisable;
+        this.onShiftClick = onShiftClick;
+        this.onCtrlClick = onCtrlClick;
     }
-    public FlatToggleButton(int x, int y, boolean enabled, Text labelActive, Text labelInactive, int color, int width, int height, Runnable onEnable, Runnable onDisable) {
+    public FlatToggleButton(int x, int y, boolean enabled, Text labelActive, Text labelInactive, int color, int width, int height, Runnable onEnable, Runnable onDisable, Runnable onShiftClick, Runnable onCtrlClick) {
         super(x, y, width, height, Text.empty());
         this.enabled = enabled;
         this.labelActive = labelActive;
@@ -55,8 +63,10 @@ public class FlatToggleButton extends ClickableWidget {
         this.colorInactive = 0xFFAAAAAA;
         this.onEnable = onEnable;
         this.onDisable = onDisable;
+        this.onShiftClick = onShiftClick;
+        this.onCtrlClick = onCtrlClick;
     }
-    public FlatToggleButton(int x, int y, boolean enabled, Text label, int colorActive, int colorInactive, int width, int height, Runnable onEnable, Runnable onDisable) {
+    public FlatToggleButton(int x, int y, boolean enabled, Text label, int colorActive, int colorInactive, int width, int height, Runnable onEnable, Runnable onDisable, Runnable onShiftClick, Runnable onCtrlClick) {
         super(x, y, width, height, Text.empty());
         this.enabled = enabled;
         this.labelActive = label;
@@ -65,8 +75,10 @@ public class FlatToggleButton extends ClickableWidget {
         this.colorInactive = colorInactive;
         this.onEnable = onEnable;
         this.onDisable = onDisable;
+        this.onShiftClick = onShiftClick;
+        this.onCtrlClick = onCtrlClick;
     }
-    public FlatToggleButton(int x, int y, boolean enabled, Text labelActive, Text labelInactive, int colorActive, int colorInactive, int width, int height, Runnable onEnable, Runnable onDisable) {
+    public FlatToggleButton(int x, int y, boolean enabled, Text labelActive, Text labelInactive, int colorActive, int colorInactive, int width, int height, Runnable onEnable, Runnable onDisable, Runnable onShiftClick, Runnable onCtrlClick) {
         super(x, y, width, height, Text.empty());
         this.enabled = enabled;
         this.labelActive = labelActive;
@@ -75,6 +87,8 @@ public class FlatToggleButton extends ClickableWidget {
         this.colorInactive = colorInactive;
         this.onEnable = onEnable;
         this.onDisable = onDisable;
+        this.onShiftClick = onShiftClick;
+        this.onCtrlClick = onCtrlClick;
     }
 
     @Override
@@ -98,14 +112,18 @@ public class FlatToggleButton extends ClickableWidget {
 
     @Override
     public void onClick(Click click, boolean doubled) {
-        enabled = !enabled;
-        if(enabled) {
-            onEnable.run();
+        if(click.hasShift() && click.hasCtrl()) {
+
+        }
+        else if (click.hasShift()) {
+            this.onShiftClick.run();
+        }
+        else if (click.hasCtrl()) {
+            this.onCtrlClick.run();
         }
         else {
-            onDisable.run();
+            toggle();
         }
-        this.setFocused(false);
     }
 
     @Override
@@ -120,6 +138,16 @@ public class FlatToggleButton extends ClickableWidget {
         return enabled;
     }
 
+    public void setEnabled(boolean enabled) {
+        if(this.enabled != enabled) toggle();
+    }
+
+    public void toggle() {
+        enabled = !enabled;
+        if(enabled) onEnable.run();
+        else onDisable.run();
+    }
+
     @Override
     public net.minecraft.client.gui.navigation.GuiNavigationPath getNavigationPath(net.minecraft.client.gui.navigation.GuiNavigation navigation) {
         return null;
@@ -130,5 +158,13 @@ public class FlatToggleButton extends ClickableWidget {
         if (!focused) {
             super.setFocused(false);
         }
+    }
+
+    public Text getLabelActive() {
+        return labelActive;
+    }
+
+    public Text getLabelInactive() {
+        return labelInactive;
     }
 }
