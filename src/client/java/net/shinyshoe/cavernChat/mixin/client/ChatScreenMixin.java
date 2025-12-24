@@ -46,9 +46,9 @@ public abstract class ChatScreenMixin {
                 2,
                 self.height - 28,
                 ChatFilter.FILTERS.get("global").getStatus(),
-                Text.of("Global"),
+                Text.of("\uD83C\uDF0F Global"),
                 0xFFFCFCFC,
-                48,
+                50,
                 12,
                 () -> ChatFilter.FILTERS.get("global").enable(),
                 () -> ChatFilter.FILTERS.get("global").disable(),
@@ -57,12 +57,12 @@ public abstract class ChatScreenMixin {
         ));
 
         buttonList.add(new FlatToggleButton(
-                52,
+                54,
                 self.height - 28,
                 ChatFilter.FILTERS.get("local").getStatus(),
-                Text.of("Local"),
+                Text.of("⛳ Local"),
                 0xFFFCD400,
-                48,
+                46,
                 12,
                 () -> ChatFilter.FILTERS.get("local").enable(),
                 () -> ChatFilter.FILTERS.get("local").disable(),
@@ -71,12 +71,12 @@ public abstract class ChatScreenMixin {
         ));
 
         buttonList.add(new FlatToggleButton(
-                104,
+                102,
                 self.height - 28,
                 ChatFilter.FILTERS.get("party").getStatus(),
-                Text.of("Party"),
+                Text.of("\uD83C\uDF82 Party"),
                 0xFF63f27f,
-                48,
+                46,
                 12,
                 () -> ChatFilter.FILTERS.get("party").enable(),
                 () -> ChatFilter.FILTERS.get("party").disable(),
@@ -85,12 +85,12 @@ public abstract class ChatScreenMixin {
         ));
 
         buttonList.add(new FlatToggleButton(
-                156,
+                150,
                 self.height - 28,
                 ChatFilter.FILTERS.get("town").getStatus(),
-                Text.of("Town"),
+                Text.of("\uD83C\uDFDA Town"),
                 0xFF54fc54,
-                48,
+                42,
                 12,
                 () -> ChatFilter.FILTERS.get("town").enable(),
                 () -> ChatFilter.FILTERS.get("town").disable(),
@@ -99,10 +99,10 @@ public abstract class ChatScreenMixin {
         ));
 
         buttonList.add(new FlatToggleButton(
-                208,
+                194,
                 self.height - 28,
                 ChatFilter.FILTERS.get("nation").getStatus(),
-                Text.of("Nation"),
+                Text.of("⚑ Nation"),
                 0xFFfca800,
                 48,
                 12,
@@ -113,12 +113,12 @@ public abstract class ChatScreenMixin {
         ));
 
         buttonList.add(new FlatToggleButton(
-                260,
+                244,
                 self.height - 28,
                 ChatFilter.FILTERS.get("dm").getStatus(),
-                Text.of("DM"),
-                0xFFfca800,
-                48,
+                Text.of("✉ DM"),
+                0xFFEEC65D,
+                30,
                 12,
                 () -> ChatFilter.FILTERS.get("dm").enable(),
                 () -> ChatFilter.FILTERS.get("dm").disable(),
@@ -127,12 +127,12 @@ public abstract class ChatScreenMixin {
         ));
 
         buttonList.add(new FlatToggleButton(
-                312,
+                276,
                 self.height - 28,
                 ChatFilter.FILTERS.get("other").getStatus(),
                 Text.of("Other"),
-                0xFFfca800,
-                48,
+                0xFFFFFFFF,
+                34,
                 12,
                 () -> ChatFilter.FILTERS.get("other").enable(),
                 () -> ChatFilter.FILTERS.get("other").disable(),
