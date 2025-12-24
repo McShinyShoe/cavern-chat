@@ -1,6 +1,7 @@
 package net.shinyshoe.cavernChat.mixin.client;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
@@ -11,8 +12,10 @@ import net.shinyshoe.cavernChat.client.ChatFilter;
 import net.shinyshoe.cavernChat.client.ui.FlatToggleButton;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.ArrayList;
@@ -24,6 +27,9 @@ public abstract class ChatScreenMixin {
 
     @Shadow
     protected TextFieldWidget chatField;
+
+    @Unique
+    private FlatToggleButton cavernChat$channelIndicator;
 
     @Inject(method = "init", at = @At("TAIL"))
     private void cavernChat$init(CallbackInfo ci) {
@@ -134,16 +140,86 @@ public abstract class ChatScreenMixin {
                 () -> buttonList.forEach(button -> { if(!Objects.equals(button.getLabelActive().getString(), "Other")) button.setEnabled(false); else button.setEnabled(true); })
         ));
 
+        cavernChat$channelIndicator = new FlatToggleButton(
+                2,
+                self.height - 14,
+                true,
+                Text.of(""),
+                0xFFFFFFFF,
+                0xFFFFFFFF,
+                0,
+                12,
+                () -> {},
+                () -> {},
+                () -> {},
+                () -> {}
+        );
+
+        cavernChat$channelIndicator.visible = false;
+        ((ScreenAccessor) self).invokeAddDrawableChild(cavernChat$channelIndicator);
+
         for(FlatToggleButton button : buttonList) {
             ((ScreenAccessor) self).invokeAddDrawableChild(button);
         }
     }
 
+    @Inject(method = "render", at = @At("HEAD"))
+    private void cavernChat$renderHead(DrawContext context, int mouseX, int mouseY, float deltaTicks, CallbackInfo ci) {
+        ChatChannel channel = ChatChannel.getCurrentActiveChannel();
+        if(channel == null) channel = ChatChannel.getCurrentDefaultChannel();
+        if(channel == null) {
+            chatInputOffset = 0;
+            return;
+        };
+
+        Text label = Text.of(channel.name());
+        TextRenderer tr = MinecraftClient.getInstance().textRenderer;
+        CavernChat.LOGGER.info("Channel name is '{}'", channel.name());
+        if(!Objects.equals(channel.name(), "Global")) chatInputOffset = tr.getWidth(label) + 4;
+        else chatInputOffset = 0;
+        CavernChat.LOGGER.info("offset: '{}'\n", chatInputOffset);
+    }
+
     @Inject(method = "render", at = @At("TAIL"))
-    private void cavernChat$render(DrawContext context, int mouseX, int mouseY, float deltaTicks, CallbackInfo ci) {
+    private void cavernChat$renderTail(DrawContext context, int mouseX, int mouseY, float deltaTicks, CallbackInfo ci) {
         ChatChannel channel = ChatChannel.getCurrentActiveChannel();
         if(channel == null) channel = ChatChannel.getCurrentDefaultChannel();
         if(channel == null) this.chatField.setEditableColor(0xFFFFFFFF);
-        else this.chatField.setEditableColor(0xFF000000 + channel.color());
+        else {
+            this.chatField.setEditableColor(0xFF000000 + channel.color());
+            cavernChat$channelIndicator.setLabel(Text.literal(channel.name()));
+            cavernChat$channelIndicator.setDimensions(chatInputOffset, 12);
+            cavernChat$channelIndicator.setColor(0xFF000000 + channel.color());
+        };
+
+        int totalOffset = chatInputOffset + (chatInputOffset == 0 ? 0 : 2);
+
+        chatField.setX(4 + totalOffset);
+        chatField.setWidth(((ChatScreen)(Object)this).width - 4 - totalOffset);
+
+        cavernChat$channelIndicator.visible = chatInputOffset != 0;
+    }
+
+    @Unique
+    private int chatInputOffset = 0;
+
+    @Redirect(
+            method = "render",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/DrawContext;fill(IIIII)V"
+            )
+    )
+    private void cavernChat$disableInputBackground(
+            DrawContext context,
+            int x1, int y1, int x2, int y2, int color
+    ) {
+        context.fill(
+                x1 + chatInputOffset + (chatInputOffset == 0 ? 0 : 2),
+                y1,
+                x2,
+                y2,
+                color
+        );
     }
 }
