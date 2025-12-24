@@ -114,17 +114,14 @@ public class FlatToggleButton extends ClickableWidget {
 
     @Override
     public void onClick(Click click, boolean doubled) {
-        if(click.hasShift() && click.hasCtrl()) {
-
+        if(!click.hasShift() && !click.hasCtrl()) {
+            toggle();
         }
-        else if (click.hasShift()) {
+        if (click.hasShift()) {
             this.onShiftClick.run();
         }
-        else if (click.hasCtrl()) {
+        if (click.hasCtrl()) {
             this.onCtrlClick.run();
-        }
-        else {
-            toggle();
         }
     }
 
