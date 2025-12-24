@@ -11,8 +11,10 @@ import net.minecraft.text.Text;
 public class FlatToggleButton extends ClickableWidget {
 
     private boolean enabled;
-    private final Text labelActive, labelInactive;
-    private final int colorActive, colorInactive;
+    private Text labelActive;
+    private Text labelInactive;
+    private int colorActive;
+    private int colorInactive;
     private final Runnable onEnable;
     private final Runnable onDisable;
     private final Runnable onShiftClick;
@@ -166,5 +168,32 @@ public class FlatToggleButton extends ClickableWidget {
 
     public Text getLabelInactive() {
         return labelInactive;
+    }
+
+    public void setLabelActive(Text labelActive) {
+        this.labelActive = labelActive;
+    }
+    public void setLabelInactive(Text labelInactive) {
+        this.labelInactive = labelInactive;
+    }
+    public void setLabel(Text label) {
+        setLabelActive(label);
+        setLabelInactive(label);
+    }
+    public void setColorActive(int color) {
+        this.colorActive = color;
+    }
+    public void setColorInactive(int color) {
+        this.colorInactive = color;
+    }
+    public void setColor(int color) {
+        setColorActive(color);
+        setColorInactive(color);
+    }
+    public int getColorActive() {
+        return this.colorActive;
+    }
+    public int getColorInactive() {
+        return this.colorInactive;
     }
 }
