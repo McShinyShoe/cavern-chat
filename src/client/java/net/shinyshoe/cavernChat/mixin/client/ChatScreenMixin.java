@@ -54,7 +54,7 @@ public abstract class ChatScreenMixin {
                 () -> ChatFilter.FILTERS.get("global").enable(),
                 () -> ChatFilter.FILTERS.get("global").disable(),
                 () -> client.player.networkHandler.sendChatCommand("g"),
-                () -> buttonList.forEach(button -> button.setEnabled(Objects.equals(button.getLabelActive().getString(), "Global")))
+                () -> buttonList.forEach(button -> button.setEnabled(button.getLabelActive().getString().contains("Global")))
         ));
 
         buttonList.add(new FlatToggleButton(
@@ -68,7 +68,7 @@ public abstract class ChatScreenMixin {
                 () -> ChatFilter.FILTERS.get("local").enable(),
                 () -> ChatFilter.FILTERS.get("local").disable(),
                 () -> client.player.networkHandler.sendChatCommand("lc"),
-                () -> buttonList.forEach(button -> button.setEnabled(Objects.equals(button.getLabelActive().getString(), "Local")))
+                () -> buttonList.forEach(button -> button.setEnabled(button.getLabelActive().getString().contains("Local")))
         ));
 
         buttonList.add(new FlatToggleButton(
@@ -82,7 +82,7 @@ public abstract class ChatScreenMixin {
                 () -> ChatFilter.FILTERS.get("party").enable(),
                 () -> ChatFilter.FILTERS.get("party").disable(),
                 () -> client.player.networkHandler.sendChatCommand("pc"),
-                () -> buttonList.forEach(button -> button.setEnabled(Objects.equals(button.getLabelActive().getString(), "Party")))
+                () -> buttonList.forEach(button -> button.setEnabled(button.getLabelActive().getString().contains("Party")))
         ));
 
         buttonList.add(new FlatToggleButton(
@@ -96,7 +96,7 @@ public abstract class ChatScreenMixin {
                 () -> ChatFilter.FILTERS.get("town").enable(),
                 () -> ChatFilter.FILTERS.get("town").disable(),
                 () -> client.player.networkHandler.sendChatCommand("tc"),
-                () -> buttonList.forEach(button -> button.setEnabled(Objects.equals(button.getLabelActive().getString(), "Town")))
+                () -> buttonList.forEach(button -> button.setEnabled(button.getLabelActive().getString().contains("Town")))
         ));
 
         buttonList.add(new FlatToggleButton(
@@ -110,7 +110,7 @@ public abstract class ChatScreenMixin {
                 () -> ChatFilter.FILTERS.get("nation").enable(),
                 () -> ChatFilter.FILTERS.get("nation").disable(),
                 () -> client.player.networkHandler.sendChatCommand("nc"),
-                () -> buttonList.forEach(button -> button.setEnabled(Objects.equals(button.getLabelActive().getString(), "Nation")))
+                () -> buttonList.forEach(button -> button.setEnabled(button.getLabelActive().getString().contains("Nation")))
         ));
 
         buttonList.add(new FlatToggleButton(
@@ -124,7 +124,7 @@ public abstract class ChatScreenMixin {
                 () -> ChatFilter.FILTERS.get("dm").enable(),
                 () -> ChatFilter.FILTERS.get("dm").disable(),
                 () -> {},
-                () -> buttonList.forEach(button -> button.setEnabled(Objects.equals(button.getLabelActive().getString(), "DM")))
+                () -> buttonList.forEach(button -> button.setEnabled(button.getLabelActive().getString().contains("DM")))
         ));
 
         buttonList.add(new FlatToggleButton(
