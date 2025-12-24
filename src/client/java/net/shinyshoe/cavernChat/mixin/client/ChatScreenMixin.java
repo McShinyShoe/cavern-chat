@@ -53,7 +53,7 @@ public abstract class ChatScreenMixin {
                 () -> ChatFilter.FILTERS.get("global").enable(),
                 () -> ChatFilter.FILTERS.get("global").disable(),
                 () -> client.player.networkHandler.sendChatCommand("g"),
-                () -> buttonList.forEach(button -> { if(!Objects.equals(button.getLabelActive().getString(), "Global")) button.setEnabled(false); else button.setEnabled(true); })
+                () -> buttonList.forEach(button -> button.setEnabled(Objects.equals(button.getLabelActive().getString(), "Global")))
         ));
 
         buttonList.add(new FlatToggleButton(
@@ -67,7 +67,7 @@ public abstract class ChatScreenMixin {
                 () -> ChatFilter.FILTERS.get("local").enable(),
                 () -> ChatFilter.FILTERS.get("local").disable(),
                 () -> client.player.networkHandler.sendChatCommand("lc"),
-                () -> buttonList.forEach(button -> { if(!Objects.equals(button.getLabelActive().getString(), "Local")) button.setEnabled(false); else button.setEnabled(true); })
+                () -> buttonList.forEach(button -> button.setEnabled(Objects.equals(button.getLabelActive().getString(), "Local")))
         ));
 
         buttonList.add(new FlatToggleButton(
@@ -81,7 +81,7 @@ public abstract class ChatScreenMixin {
                 () -> ChatFilter.FILTERS.get("party").enable(),
                 () -> ChatFilter.FILTERS.get("party").disable(),
                 () -> client.player.networkHandler.sendChatCommand("pc"),
-                () -> buttonList.forEach(button -> { if(!Objects.equals(button.getLabelActive().getString(), "Party")) button.setEnabled(false); else button.setEnabled(true); })
+                () -> buttonList.forEach(button -> button.setEnabled(Objects.equals(button.getLabelActive().getString(), "Party")))
         ));
 
         buttonList.add(new FlatToggleButton(
@@ -95,7 +95,7 @@ public abstract class ChatScreenMixin {
                 () -> ChatFilter.FILTERS.get("town").enable(),
                 () -> ChatFilter.FILTERS.get("town").disable(),
                 () -> client.player.networkHandler.sendChatCommand("tc"),
-                () -> buttonList.forEach(button -> { if(!Objects.equals(button.getLabelActive().getString(), "Town")) button.setEnabled(false); else button.setEnabled(true); })
+                () -> buttonList.forEach(button -> button.setEnabled(Objects.equals(button.getLabelActive().getString(), "Town")))
         ));
 
         buttonList.add(new FlatToggleButton(
@@ -109,7 +109,7 @@ public abstract class ChatScreenMixin {
                 () -> ChatFilter.FILTERS.get("nation").enable(),
                 () -> ChatFilter.FILTERS.get("nation").disable(),
                 () -> client.player.networkHandler.sendChatCommand("nc"),
-                () -> buttonList.forEach(button -> { if(!Objects.equals(button.getLabelActive().getString(), "Nation")) button.setEnabled(false); else button.setEnabled(true); })
+                () -> buttonList.forEach(button -> button.setEnabled(Objects.equals(button.getLabelActive().getString(), "Nation")))
         ));
 
         buttonList.add(new FlatToggleButton(
@@ -123,7 +123,7 @@ public abstract class ChatScreenMixin {
                 () -> ChatFilter.FILTERS.get("dm").enable(),
                 () -> ChatFilter.FILTERS.get("dm").disable(),
                 () -> {},
-                () -> buttonList.forEach(button -> { if(!Objects.equals(button.getLabelActive().getString(), "DM")) button.setEnabled(false); else button.setEnabled(true); })
+                () -> buttonList.forEach(button -> button.setEnabled(Objects.equals(button.getLabelActive().getString(), "DM")))
         ));
 
         buttonList.add(new FlatToggleButton(
@@ -137,7 +137,7 @@ public abstract class ChatScreenMixin {
                 () -> ChatFilter.FILTERS.get("other").enable(),
                 () -> ChatFilter.FILTERS.get("other").disable(),
                 () -> {},
-                () -> buttonList.forEach(button -> { if(!Objects.equals(button.getLabelActive().getString(), "Other")) button.setEnabled(false); else button.setEnabled(true); })
+                () -> buttonList.forEach(button -> button.setEnabled(Objects.equals(button.getLabelActive().getString(), "Other")))
         ));
 
         cavernChat$channelIndicator = new FlatToggleButton(
@@ -170,7 +170,7 @@ public abstract class ChatScreenMixin {
         if(channel == null) {
             chatInputOffset = 0;
             return;
-        };
+        }
 
         Text label = Text.of(channel.name());
         TextRenderer tr = MinecraftClient.getInstance().textRenderer;
@@ -190,7 +190,7 @@ public abstract class ChatScreenMixin {
             cavernChat$channelIndicator.setLabel(Text.literal(channel.name()));
             cavernChat$channelIndicator.setDimensions(chatInputOffset, 12);
             cavernChat$channelIndicator.setColor(0xFF000000 + channel.color());
-        };
+        }
 
         int totalOffset = chatInputOffset + (chatInputOffset == 0 ? 0 : 2);
 
