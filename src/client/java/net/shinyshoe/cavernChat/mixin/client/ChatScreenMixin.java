@@ -9,6 +9,7 @@ import net.minecraft.text.Text;
 import net.shinyshoe.cavernChat.CavernChat;
 import net.shinyshoe.cavernChat.client.ChatChannel;
 import net.shinyshoe.cavernChat.client.ChatFilter;
+import net.shinyshoe.cavernChat.client.ui.FlatButton;
 import net.shinyshoe.cavernChat.client.ui.FlatToggleButton;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -140,6 +141,18 @@ public abstract class ChatScreenMixin {
                 () -> buttonList.forEach(button -> button.setEnabled(Objects.equals(button.getLabelActive().getString(), "Other")))
         ));
 
+        FlatButton resetButton = new FlatButton(
+                312,
+                self.height - 28,
+                Text.of("\uD83D\uDDD8"),
+                0xFFFFFFFF,
+                12,
+                12,
+                () -> buttonList.forEach(button -> button.setEnabled(true)),
+                () -> {},
+                () -> {}
+        );
+
         cavernChat$channelIndicator = new FlatToggleButton(
                 2,
                 self.height - 14,
@@ -154,6 +167,8 @@ public abstract class ChatScreenMixin {
                 () -> {},
                 () -> {}
         );
+
+        ((ScreenAccessor) self).invokeAddDrawableChild(resetButton);
 
         cavernChat$channelIndicator.visible = false;
         ((ScreenAccessor) self).invokeAddDrawableChild(cavernChat$channelIndicator);
