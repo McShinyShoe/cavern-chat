@@ -40,9 +40,6 @@ public abstract class ChatScreenMixin {
 
         List<FlatToggleButton> buttonList = new ArrayList<>();
 
-        if (client.getServer() != null) CavernChat.LOGGER.info("im on {}", client.getServer().getName());
-        else CavernChat.LOGGER.info("im on null");
-
         buttonList.add(new FlatToggleButton(
                 2,
                 self.height - 28,
@@ -189,10 +186,8 @@ public abstract class ChatScreenMixin {
 
         Text label = Text.of(channel.name());
         TextRenderer tr = MinecraftClient.getInstance().textRenderer;
-        CavernChat.LOGGER.info("Channel name is '{}'", channel.name());
         if(!Objects.equals(channel.name(), "Global")) chatInputOffset = tr.getWidth(label) + 4;
         else chatInputOffset = 0;
-        CavernChat.LOGGER.info("offset: '{}'\n", chatInputOffset);
     }
 
     @Inject(method = "render", at = @At("TAIL"))
