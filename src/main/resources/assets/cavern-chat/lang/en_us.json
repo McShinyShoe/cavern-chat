@@ -1,0 +1,22 @@
+{
+  "text.autoconfig.cavern-chat.title": "Cavern Chat Options",
+
+  "text.autoconfig.cavern-chat.option.joinLeaveMessages": "Join/Leave Messages",
+  "text.autoconfig.cavern-chat.option.joinLeaveMessages.playerJoinMessage": "Player Join",
+  "text.autoconfig.cavern-chat.option.joinLeaveMessages.playerLeaveMessage": "Player Leave",
+  "text.autoconfig.cavern-chat.option.joinLeaveMessages.newPlayerMessage": "New Player",
+
+  "text.autoconfig.cavern-chat.option.serverMessages": "Server Messages",
+  "text.autoconfig.cavern-chat.option.serverMessages.vote": "Vote",
+  "text.autoconfig.cavern-chat.option.serverMessages.motd": "MOTD",
+  "text.autoconfig.cavern-chat.option.serverMessages.crateOpen": "Crate Open",
+
+  "text.autoconfig.cavern-chat.option.pluginMessages": "Plugin Messages",
+  "text.autoconfig.cavern-chat.option.pluginMessages.lottery": "Lottery",
+  "text.autoconfig.cavern-chat.option.pluginMessages.coinFlip": "Coin Flip",
+
+  "text.autoconfig.cavern-chat.option.moFoodMessages": "MoFood Messages",
+  "text.autoconfig.cavern-chat.option.moFoodMessages.moFoodCharity": "Charity",
+  "text.autoconfig.cavern-chat.option.moFoodMessages.moFoodRerollQuest": "Reroll Quest",
+  "text.autoconfig.cavern-chat.option.moFoodMessages.moFoodNewSeason": "New Season"
+}
