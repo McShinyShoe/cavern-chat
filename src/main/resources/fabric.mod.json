@@ -21,6 +21,9 @@
     ],
     "main": [
       "net.shinyshoe.cavernChat.CavernChat"
+    ],
+    "modmenu": [
+      "net.shinyshoe.cavernChat.client.ModMenuIntegration"
     ]
   },
   "mixins": [
