@@ -7,7 +7,8 @@
   "authors": [ "McShinyShoe" ],
   "contact": {
     "homepage": "https://mods.shinyshoe.net/cavern-chat",
-    "sources": "https://giuthub.com/McShinyShoe/cavern-chat"
+    "sources": "https://giuthub.com/McShinyShoe/cavern-chat",
+    "isssues": "https://github.com/McShinyShoe/cavern-chat/issues"
   },
   "license": "MIT",
   "icon": "assets/cavern-chat/icon.png",
