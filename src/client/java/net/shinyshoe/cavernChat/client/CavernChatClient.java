@@ -21,6 +21,7 @@ public class CavernChatClient implements ClientModInitializer {
             onConfigChanged(config);
             return ActionResult.SUCCESS;
         });
+        onConfigChanged(AutoConfig.getConfigHolder(CavernChatConfig.class).get());
     }
     private static void onConfigChanged(CavernChatConfig config) {
         ChatFilter.DYNAMIC_FILTERS.clear();
