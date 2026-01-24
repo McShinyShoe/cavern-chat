@@ -36,7 +36,7 @@ public class ChatFilter {
         FILTERS.put("new_player", new ChatFilter("new_player", (Text text) -> text.getString().startsWith("Welcome"), true));
 
         FILTERS.put("vote", new ChatFilter("vote", (Text text) -> text.getString().startsWith("[/VOTE]"), true));
-        FILTERS.put("motd", new ChatFilter("motd", (Text text) -> text.getString().startsWith("\nDISCORD SERVER") || text.getString().startsWith("\nSERVER STORE") || text.getString().startsWith("\nSUGGEST IDEAS"),true));
+        FILTERS.put("motd", new ChatFilter("motd", (Text text) -> text.getString().startsWith("\nDISCORD SERVER") || text.getString().startsWith("\nSERVER STORE") || text.getString().startsWith("\nSUGGEST IDEAS") || text.getString().startsWith("\nSERVER WIKI"),true));
         FILTERS.put("crate_open", new ChatFilter("crate_open", (Text text) -> text.getString().contains("\nPurchase keys:"), true));
 
         FILTERS.put("lottery", new ChatFilter("lottery", (Text text) -> text.getString().startsWith("LOTTERY"), true));
@@ -46,6 +46,7 @@ public class ChatFilter {
         FILTERS.put("mofood_reroll_quest", new ChatFilter("mofood_reroll_quest", (Text text) -> text.getString().startsWith("MoFood") && text.getString().contains("rerolled the Quest"), true));
         FILTERS.put("mofood_new_season", new ChatFilter("mofood_new_season", (Text text) -> text.getString().startsWith("▅") && text.getString().contains("New Season"), true));
 
+        FILTERS.put("dungeon_drowned_pirate", new ChatFilter("dungeon_drowned_pirate", (Text text) -> text.getString().startsWith("Drowned Pirate"), true));
         FILTERS.put("other", new ChatFilter("other", (Text text) -> {
             for(ChatFilter filter : FILTERS.values()) {
                 if(Objects.equals(filter.getName(), "other")) continue;
