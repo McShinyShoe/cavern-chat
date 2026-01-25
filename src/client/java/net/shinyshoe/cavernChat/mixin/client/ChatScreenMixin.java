@@ -6,9 +6,9 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.Text;
-import net.shinyshoe.cavernChat.CavernChat;
 import net.shinyshoe.cavernChat.client.ChatChannel;
 import net.shinyshoe.cavernChat.client.ChatFilter;
+import net.shinyshoe.cavernChat.client.ChatType;
 import net.shinyshoe.cavernChat.client.ui.FlatButton;
 import net.shinyshoe.cavernChat.client.ui.FlatToggleButton;
 import org.spongepowered.asm.mixin.Mixin;
@@ -43,13 +43,13 @@ public abstract class ChatScreenMixin {
         buttonList.add(new FlatToggleButton(
                 2,
                 self.height - 28,
-                ChatFilter.FILTERS.get("global").getStatus(),
+                ChatFilter.FILTERS.get(ChatType.MESSAGE_GLOBAL).getStatus(),
                 Text.of("\uD83C\uDF0F Global"),
                 0xFFFCFCFC,
                 50,
                 12,
-                () -> ChatFilter.FILTERS.get("global").enable(),
-                () -> ChatFilter.FILTERS.get("global").disable(),
+                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_GLOBAL).enable(),
+                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_GLOBAL).disable(),
                 () -> client.player.networkHandler.sendChatCommand("g"),
                 () -> buttonList.forEach(button -> button.setEnabled(button.getLabelActive().getString().contains("Global")))
         ));
@@ -57,13 +57,13 @@ public abstract class ChatScreenMixin {
         buttonList.add(new FlatToggleButton(
                 54,
                 self.height - 28,
-                ChatFilter.FILTERS.get("local").getStatus(),
+                ChatFilter.FILTERS.get(ChatType.MESSAGE_LOCAL).getStatus(),
                 Text.of("⛳ Local"),
                 0xFFFCD400,
                 46,
                 12,
-                () -> ChatFilter.FILTERS.get("local").enable(),
-                () -> ChatFilter.FILTERS.get("local").disable(),
+                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_LOCAL).enable(),
+                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_LOCAL).disable(),
                 () -> client.player.networkHandler.sendChatCommand("lc"),
                 () -> buttonList.forEach(button -> button.setEnabled(button.getLabelActive().getString().contains("Local")))
         ));
@@ -71,13 +71,13 @@ public abstract class ChatScreenMixin {
         buttonList.add(new FlatToggleButton(
                 102,
                 self.height - 28,
-                ChatFilter.FILTERS.get("party").getStatus(),
+                ChatFilter.FILTERS.get(ChatType.MESSAGE_PARTY).getStatus(),
                 Text.of("\uD83C\uDF82 Party"),
                 0xFF63f27f,
                 46,
                 12,
-                () -> ChatFilter.FILTERS.get("party").enable(),
-                () -> ChatFilter.FILTERS.get("party").disable(),
+                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_PARTY).enable(),
+                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_PARTY).disable(),
                 () -> client.player.networkHandler.sendChatCommand("pc"),
                 () -> buttonList.forEach(button -> button.setEnabled(button.getLabelActive().getString().contains("Party")))
         ));
@@ -85,13 +85,13 @@ public abstract class ChatScreenMixin {
         buttonList.add(new FlatToggleButton(
                 150,
                 self.height - 28,
-                ChatFilter.FILTERS.get("town").getStatus(),
+                ChatFilter.FILTERS.get(ChatType.MESSAGE_TOWN).getStatus(),
                 Text.of("\uD83C\uDFDA Town"),
                 0xFF54fc54,
                 42,
                 12,
-                () -> ChatFilter.FILTERS.get("town").enable(),
-                () -> ChatFilter.FILTERS.get("town").disable(),
+                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_TOWN).enable(),
+                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_TOWN).disable(),
                 () -> client.player.networkHandler.sendChatCommand("tc"),
                 () -> buttonList.forEach(button -> button.setEnabled(button.getLabelActive().getString().contains("Town")))
         ));
@@ -99,13 +99,13 @@ public abstract class ChatScreenMixin {
         buttonList.add(new FlatToggleButton(
                 194,
                 self.height - 28,
-                ChatFilter.FILTERS.get("nation").getStatus(),
+                ChatFilter.FILTERS.get(ChatType.MESSAGE_NATION).getStatus(),
                 Text.of("⚑ Nation"),
                 0xFFfca800,
                 48,
                 12,
-                () -> ChatFilter.FILTERS.get("nation").enable(),
-                () -> ChatFilter.FILTERS.get("nation").disable(),
+                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_NATION).enable(),
+                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_NATION).disable(),
                 () -> client.player.networkHandler.sendChatCommand("nc"),
                 () -> buttonList.forEach(button -> button.setEnabled(button.getLabelActive().getString().contains("Nation")))
         ));
@@ -113,13 +113,13 @@ public abstract class ChatScreenMixin {
         buttonList.add(new FlatToggleButton(
                 244,
                 self.height - 28,
-                ChatFilter.FILTERS.get("dm").getStatus(),
+                ChatFilter.FILTERS.get(ChatType.MESSAGE_DM).getStatus(),
                 Text.of("✉ DM"),
                 0xFFEEC65D,
                 30,
                 12,
-                () -> ChatFilter.FILTERS.get("dm").enable(),
-                () -> ChatFilter.FILTERS.get("dm").disable(),
+                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_DM).enable(),
+                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_DM).disable(),
                 () -> {},
                 () -> buttonList.forEach(button -> button.setEnabled(button.getLabelActive().getString().contains("DM")))
         ));
@@ -127,13 +127,13 @@ public abstract class ChatScreenMixin {
         buttonList.add(new FlatToggleButton(
                 276,
                 self.height - 28,
-                ChatFilter.FILTERS.get("other").getStatus(),
+                ChatFilter.FILTERS.get(ChatType.MESSAGE_OTHER).getStatus(),
                 Text.of("Other"),
                 0xFFFFFFFF,
                 34,
                 12,
-                () -> ChatFilter.FILTERS.get("other").enable(),
-                () -> ChatFilter.FILTERS.get("other").disable(),
+                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_OTHER).enable(),
+                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_OTHER).disable(),
                 () -> {},
                 () -> buttonList.forEach(button -> button.setEnabled(Objects.equals(button.getLabelActive().getString(), "Other")))
         ));
