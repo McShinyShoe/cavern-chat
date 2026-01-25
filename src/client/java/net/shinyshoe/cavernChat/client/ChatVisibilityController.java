@@ -8,10 +8,11 @@ import net.minecraft.text.Text;
 import net.shinyshoe.cavernChat.CavernChat;
 import net.shinyshoe.cavernChat.mixin.client.ChatHudAccessor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class ChatVisibilityController {
-    static private List<CategorizedChat> categorizedChatList;
+    static private List<CategorizedChat> categorizedChatList = new ArrayList<>();
     private ChatVisibilityController() {}
 
     public static void chatClear() {
