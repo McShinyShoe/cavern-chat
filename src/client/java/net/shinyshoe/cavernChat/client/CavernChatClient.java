@@ -25,13 +25,13 @@ public class CavernChatClient implements ClientModInitializer {
     }
     private static void onConfigChanged(CavernChatConfig config) {
         ChatFilter.DYNAMIC_FILTERS.clear();
-        for(Map.Entry<String, Supplier<FilterMode>> filter : ChatFilter.CONFIGURABLE_FILTERS.entrySet()) {
+        for(Map.Entry<ChatType, Supplier<FilterMode>> filter : ChatFilter.CONFIGURABLE_FILTERS.entrySet()) {
             switch (filter.getValue().get()) {
                 case FilterMode.ALWAYS_OFF -> ChatFilter.FILTERS.get(filter.getKey()).disable();
                 case FilterMode.ALWAYS_ON -> ChatFilter.FILTERS.get(filter.getKey()).enable();
                 case FilterMode.DYNAMIC -> {
                     ChatFilter.DYNAMIC_FILTERS.add(filter.getKey());
-                    if(ChatFilter.FILTERS.get("other").getStatus()) ChatFilter.FILTERS.get(filter.getKey()).enable();
+                    if(ChatFilter.FILTERS.get(ChatType.MESSAGE_OTHER).getStatus()) ChatFilter.FILTERS.get(filter.getKey()).enable();
                     else ChatFilter.FILTERS.get(filter.getKey()).disable();
                 }
             }

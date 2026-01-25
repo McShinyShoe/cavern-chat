@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.client.gui.hud.ChatHudLine;
+import net.minecraft.text.Text;
 import net.shinyshoe.cavernChat.CavernChat;
 import net.shinyshoe.cavernChat.mixin.client.ChatHudAccessor;
 
@@ -28,6 +29,7 @@ public final class ChatVisibilityController {
         ChatHud chatHud = client.inGameHud.getChatHud();
         ChatHudAccessor acc = (ChatHudAccessor) chatHud;
 
+        acc.getVisibleMessages();
         acc.getVisibleMessages().clear();
         for(ChatHudLine chatHudLine : Lists.reverse(acc.getMessages())) {
             assert chatHudLine != null;
