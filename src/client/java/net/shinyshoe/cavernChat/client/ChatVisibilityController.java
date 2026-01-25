@@ -8,7 +8,10 @@ import net.minecraft.text.Text;
 import net.shinyshoe.cavernChat.CavernChat;
 import net.shinyshoe.cavernChat.mixin.client.ChatHudAccessor;
 
+import java.util.List;
+
 public final class ChatVisibilityController {
+    static private List<CategorizedChat> categorizedChatList;
     private ChatVisibilityController() {}
 
     public static void chatClear() {
@@ -29,17 +32,11 @@ public final class ChatVisibilityController {
         ChatHud chatHud = client.inGameHud.getChatHud();
         ChatHudAccessor acc = (ChatHudAccessor) chatHud;
 
-        acc.getVisibleMessages();
         acc.getVisibleMessages().clear();
-        for(ChatHudLine chatHudLine : Lists.reverse(acc.getMessages())) {
-            assert chatHudLine != null;
-            boolean passFilter = false;
-            for (ChatFilter filter : ChatFilter.FILTERS.values()) {
-                if(!filter.getStatus()) continue;
-                if(filter.checkText(chatHudLine.content())) passFilter = true;
+        for(CategorizedChat categorizedChat : categorizedChatList) {
+            if(ChatType.enabled.get(categorizedChat.type)) {
+                acc.invokeAddVisibleMessage(categorizedChat.message);
             }
-            if(!passFilter) continue;
-            acc.invokeAddVisibleMessage(chatHudLine);
         }
     }
 
@@ -52,6 +49,7 @@ public final class ChatVisibilityController {
         for (ChatFilter filter : ChatFilter.FILTERS.values()) {
             if(!filter.getStatus()) continue;
             if(filter.checkText(content)) {
+                categorizedChatList.add(new CategorizedChat(filter.type(), message));
                 acc.invokeAddVisibleMessage(message);
             }
         }
