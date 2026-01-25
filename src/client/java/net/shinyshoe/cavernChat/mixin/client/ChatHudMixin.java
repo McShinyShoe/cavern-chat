@@ -5,9 +5,11 @@ import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.client.gui.hud.ChatHudLine;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.shinyshoe.cavernChat.CavernChat;
 import net.shinyshoe.cavernChat.client.ChatChannel;
 import net.shinyshoe.cavernChat.client.ChatVisibilityController;
 import net.shinyshoe.cavernChat.client.util.ChatUtils;
+import net.shinyshoe.cavernChat.client.util.ServerUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,6 +27,13 @@ public abstract class ChatHudMixin {
             )
     )
     private void cavernchat$skipVisible(ChatHud instance, ChatHudLine line) {
+        if(!ServerUtils.isCavern()) {
+            MinecraftClient client = MinecraftClient.getInstance();
+            ChatHud chatHud = client.inGameHud.getChatHud();
+            ChatHudAccessor acc = (ChatHudAccessor) chatHud;
+            acc.invokeAddVisibleMessage(line);
+            return;
+        };
         ChatVisibilityController.chatAdd(line);
     }
 
@@ -34,6 +43,7 @@ public abstract class ChatHudMixin {
             cancellable = true
     )
     private void addMessage(Text message, CallbackInfo ci) {
+        if(!ServerUtils.isCavern()) return;
         String str = message.getString();
         if (str.contains("WELCOME TO THE CAVERN")) onJoinTowny();
 

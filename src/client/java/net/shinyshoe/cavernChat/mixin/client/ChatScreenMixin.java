@@ -11,6 +11,7 @@ import net.shinyshoe.cavernChat.client.ChatFilter;
 import net.shinyshoe.cavernChat.client.ChatType;
 import net.shinyshoe.cavernChat.client.ui.FlatButton;
 import net.shinyshoe.cavernChat.client.ui.FlatToggleButton;
+import net.shinyshoe.cavernChat.client.util.ServerUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -34,6 +35,7 @@ public abstract class ChatScreenMixin {
 
     @Inject(method = "init", at = @At("TAIL"))
     private void cavernChat$init(CallbackInfo ci) {
+        if(!ServerUtils.isCavern()) return;
         ChatScreen self = (ChatScreen)(Object)this;
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.player == null) return;
@@ -177,6 +179,7 @@ public abstract class ChatScreenMixin {
 
     @Inject(method = "render", at = @At("HEAD"))
     private void cavernChat$renderHead(DrawContext context, int mouseX, int mouseY, float deltaTicks, CallbackInfo ci) {
+        if(!ServerUtils.isCavern()) return;
         ChatChannel channel = ChatChannel.getCurrentActiveChannel();
         if(channel == null) channel = ChatChannel.getCurrentDefaultChannel();
         if(channel == null) {
@@ -192,6 +195,7 @@ public abstract class ChatScreenMixin {
 
     @Inject(method = "render", at = @At("TAIL"))
     private void cavernChat$renderTail(DrawContext context, int mouseX, int mouseY, float deltaTicks, CallbackInfo ci) {
+        if(!ServerUtils.isCavern()) return;
         ChatChannel channel = ChatChannel.getCurrentActiveChannel();
         if(channel == null) channel = ChatChannel.getCurrentDefaultChannel();
         if(channel == null) this.chatField.setEditableColor(0xFFFFFFFF);
@@ -224,6 +228,12 @@ public abstract class ChatScreenMixin {
             DrawContext context,
             int x1, int y1, int x2, int y2, int color
     ) {
+        if(!ServerUtils.isCavern()) {
+            MinecraftClient client = MinecraftClient.getInstance();
+            assert client.currentScreen != null;
+            context.fill(2, client.currentScreen.height - 14, client.currentScreen.width - 2, client.currentScreen.height - 2, client.options.getTextBackgroundColor(Integer.MIN_VALUE));
+            return;
+        }
         context.fill(
                 x1 + chatInputOffset + (chatInputOffset == 0 ? 0 : 2),
                 y1,
