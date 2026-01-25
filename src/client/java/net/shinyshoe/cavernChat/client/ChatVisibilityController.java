@@ -43,6 +43,20 @@ public final class ChatVisibilityController {
         }
     }
 
+    public static void chatAdd(ChatHudLine message) {
+        MinecraftClient client = MinecraftClient.getInstance();
+        Text content = message.content();
+        ChatHud chatHud = client.inGameHud.getChatHud();
+        ChatHudAccessor acc = (ChatHudAccessor) chatHud;
+
+        for (ChatFilter filter : ChatFilter.FILTERS.values()) {
+            if(!filter.getStatus()) continue;
+            if(filter.checkText(content)) {
+                acc.invokeAddVisibleMessage(message);
+            }
+        }
+    }
+
     public static void chatReset() {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client == null || client.inGameHud == null) return;

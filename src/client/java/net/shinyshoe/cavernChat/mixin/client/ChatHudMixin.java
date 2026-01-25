@@ -6,31 +6,26 @@ import net.minecraft.client.gui.hud.ChatHudLine;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.shinyshoe.cavernChat.client.ChatChannel;
-import net.shinyshoe.cavernChat.client.ChatFilter;
+import net.shinyshoe.cavernChat.client.ChatVisibilityController;
 import net.shinyshoe.cavernChat.client.util.ChatUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ChatHud.class)
 public abstract class ChatHudMixin {
-    @Inject(
-            method = "addVisibleMessage(Lnet/minecraft/client/gui/hud/ChatHudLine;)V",
-            at = @At("HEAD"),
-            cancellable = true
+    @Redirect(
+            method = "addMessage(Lnet/minecraft/text/Text;Lnet/minecraft/network/message/MessageSignatureData;Lnet/minecraft/client/gui/hud/MessageIndicator;)V",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/hud/ChatHud;addVisibleMessage(Lnet/minecraft/client/gui/hud/ChatHudLine;)V"
+            )
     )
-    private void onAddVisibleMessage(ChatHudLine message, CallbackInfo ci) {
-        Text content = message.content();
-
-        for (ChatFilter filter : ChatFilter.FILTERS.values()) {
-            if(!filter.getStatus()) continue;
-            if(filter.checkText(content)) {
-                return;
-            }
-        }
-        ci.cancel();
+    private void cavernchat$skipVisible(ChatHud instance, ChatHudLine line) {
+        ChatVisibilityController.chatAdd(line);
     }
 
     @Inject(
