@@ -6,6 +6,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.Text;
+import net.shinyshoe.cavernChat.client.CavernChatConfig;
 import net.shinyshoe.cavernChat.client.ChatChannel;
 import net.shinyshoe.cavernChat.client.ChatFilter;
 import net.shinyshoe.cavernChat.client.ChatType;
@@ -50,8 +51,14 @@ public abstract class ChatScreenMixin {
                 0xFFFCFCFC,
                 50,
                 12,
-                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_GLOBAL).enable(),
-                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_GLOBAL).disable(),
+                () -> {
+                    ChatFilter.FILTERS.get(ChatType.MESSAGE_GLOBAL).enable();
+                    CavernChatConfig.getInstance().chatChannels.globalMessages = true;
+                },
+                () -> {
+                    ChatFilter.FILTERS.get(ChatType.MESSAGE_GLOBAL).disable();
+                    CavernChatConfig.getInstance().chatChannels.globalMessages = false;
+                },
                 () -> client.player.networkHandler.sendChatCommand("g"),
                 () -> buttonList.forEach(button -> button.setEnabled(button.getLabelActive().getString().contains("Global")))
         ));
@@ -64,8 +71,14 @@ public abstract class ChatScreenMixin {
                 0xFFFCD400,
                 46,
                 12,
-                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_LOCAL).enable(),
-                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_LOCAL).disable(),
+                () -> {
+                    ChatFilter.FILTERS.get(ChatType.MESSAGE_LOCAL).enable();
+                    CavernChatConfig.getInstance().chatChannels.localMessages = true;
+                },
+                () -> {
+                    ChatFilter.FILTERS.get(ChatType.MESSAGE_LOCAL).disable();
+                    CavernChatConfig.getInstance().chatChannels.localMessages = false;
+                },
                 () -> client.player.networkHandler.sendChatCommand("lc"),
                 () -> buttonList.forEach(button -> button.setEnabled(button.getLabelActive().getString().contains("Local")))
         ));
@@ -78,8 +91,14 @@ public abstract class ChatScreenMixin {
                 0xFF63f27f,
                 46,
                 12,
-                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_PARTY).enable(),
-                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_PARTY).disable(),
+                () -> {
+                    ChatFilter.FILTERS.get(ChatType.MESSAGE_PARTY).enable();
+                    CavernChatConfig.getInstance().chatChannels.partyMessages = true;
+                },
+                () -> {
+                    ChatFilter.FILTERS.get(ChatType.MESSAGE_PARTY).disable();
+                    CavernChatConfig.getInstance().chatChannels.partyMessages = false;
+                },
                 () -> client.player.networkHandler.sendChatCommand("pc"),
                 () -> buttonList.forEach(button -> button.setEnabled(button.getLabelActive().getString().contains("Party")))
         ));
@@ -92,8 +111,14 @@ public abstract class ChatScreenMixin {
                 0xFF54fc54,
                 42,
                 12,
-                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_TOWN).enable(),
-                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_TOWN).disable(),
+                () -> {
+                    ChatFilter.FILTERS.get(ChatType.MESSAGE_TOWN).enable();
+                    CavernChatConfig.getInstance().chatChannels.townMessages = true;
+                },
+                () -> {
+                    ChatFilter.FILTERS.get(ChatType.MESSAGE_TOWN).disable();
+                    CavernChatConfig.getInstance().chatChannels.townMessages = false;
+                },
                 () -> client.player.networkHandler.sendChatCommand("tc"),
                 () -> buttonList.forEach(button -> button.setEnabled(button.getLabelActive().getString().contains("Town")))
         ));
@@ -106,8 +131,14 @@ public abstract class ChatScreenMixin {
                 0xFFfca800,
                 48,
                 12,
-                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_NATION).enable(),
-                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_NATION).disable(),
+                () -> {
+                    ChatFilter.FILTERS.get(ChatType.MESSAGE_NATION).enable();
+                    CavernChatConfig.getInstance().chatChannels.nationMessages = true;
+                },
+                () -> {
+                    ChatFilter.FILTERS.get(ChatType.MESSAGE_NATION).disable();
+                    CavernChatConfig.getInstance().chatChannels.nationMessages = false;
+                },
                 () -> client.player.networkHandler.sendChatCommand("nc"),
                 () -> buttonList.forEach(button -> button.setEnabled(button.getLabelActive().getString().contains("Nation")))
         ));
@@ -120,8 +151,14 @@ public abstract class ChatScreenMixin {
                 0xFFEEC65D,
                 30,
                 12,
-                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_DM).enable(),
-                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_DM).disable(),
+                () -> {
+                    ChatFilter.FILTERS.get(ChatType.MESSAGE_DM).enable();
+                    CavernChatConfig.getInstance().chatChannels.dmMessages = true;
+                },
+                () -> {
+                    ChatFilter.FILTERS.get(ChatType.MESSAGE_DM).disable();
+                    CavernChatConfig.getInstance().chatChannels.dmMessages = false;
+                },
                 () -> {},
                 () -> buttonList.forEach(button -> button.setEnabled(button.getLabelActive().getString().contains("DM")))
         ));
@@ -134,8 +171,14 @@ public abstract class ChatScreenMixin {
                 0xFFFFFFFF,
                 34,
                 12,
-                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_OTHER).enable(),
-                () -> ChatFilter.FILTERS.get(ChatType.MESSAGE_OTHER).disable(),
+                () -> {
+                    ChatFilter.FILTERS.get(ChatType.MESSAGE_OTHER).enable();
+                    CavernChatConfig.getInstance().chatChannels.otherMessages = true;
+                },
+                () -> {
+                    ChatFilter.FILTERS.get(ChatType.MESSAGE_OTHER).disable();
+                    CavernChatConfig.getInstance().chatChannels.otherMessages = false;
+                },
                 () -> {},
                 () -> buttonList.forEach(button -> button.setEnabled(Objects.equals(button.getLabelActive().getString(), "Other")))
         ));

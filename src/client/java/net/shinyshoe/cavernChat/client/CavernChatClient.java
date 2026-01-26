@@ -36,6 +36,13 @@ public class CavernChatClient implements ClientModInitializer {
                 }
             }
         }
+        ChatType.enabled.put(ChatType.MESSAGE_GLOBAL, config.chatChannels.globalMessages);
+        ChatType.enabled.put(ChatType.MESSAGE_LOCAL, config.chatChannels.localMessages);
+        ChatType.enabled.put(ChatType.MESSAGE_PARTY, config.chatChannels.partyMessages);
+        ChatType.enabled.put(ChatType.MESSAGE_TOWN, config.chatChannels.townMessages);
+        ChatType.enabled.put(ChatType.MESSAGE_NATION, config.chatChannels.nationMessages);
+        ChatType.enabled.put(ChatType.MESSAGE_DM, config.chatChannels.dmMessages);
+        ChatType.enabled.put(ChatType.MESSAGE_OTHER, config.chatChannels.otherMessages);
         ChatVisibilityController.chatRebuild();
     }
 }

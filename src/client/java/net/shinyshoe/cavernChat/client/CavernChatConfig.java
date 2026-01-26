@@ -9,6 +9,8 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 public class CavernChatConfig implements ConfigData {
 
     @ConfigEntry.Gui.CollapsibleObject
+    public ChatChannels chatChannels = new ChatChannels();
+    @ConfigEntry.Gui.CollapsibleObject
     public JoinLeaveMessages joinLeaveMessages = new JoinLeaveMessages();
     @ConfigEntry.Gui.CollapsibleObject
     public ServerMessages serverMessages = new ServerMessages();
@@ -16,6 +18,16 @@ public class CavernChatConfig implements ConfigData {
     public PluginMessages pluginMessages = new PluginMessages();
     @ConfigEntry.Gui.CollapsibleObject
     public MoFoodMessages moFoodMessages = new MoFoodMessages();
+
+    public static class ChatChannels {
+        public boolean globalMessages = true;
+        public boolean localMessages = true;
+        public boolean partyMessages = true;
+        public boolean townMessages = true;
+        public boolean nationMessages = true;
+        public boolean dmMessages = true;
+        public boolean otherMessages = true;
+    }
 
     public static class JoinLeaveMessages {
         @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
