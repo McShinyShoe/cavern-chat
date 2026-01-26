@@ -164,8 +164,6 @@ public final class ChatVisibilityController {
                     return Optional.empty();
                 }, Style.EMPTY);
 
-                CavernChat.LOGGER.info(line.toString());
-
                 ChatHudLine newLine = new ChatHudLine(line.creationTick(), newText, line.signature(), line.indicator());
                 acc.invokeAddVisibleMessage(newLine);
             }
