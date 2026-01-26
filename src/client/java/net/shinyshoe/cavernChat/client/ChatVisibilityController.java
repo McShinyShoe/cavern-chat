@@ -98,7 +98,7 @@ public final class ChatVisibilityController {
         return color;
     }
 
-    private static final Pattern DM_PATTERN = Pattern.compile("✉ \\[MSG\\] (you|[A-Za-z0-9_]+) → (you|[A-Za-z0-9_]+)");
+    private static final Pattern DM_PATTERN = Pattern.compile("✉ \\[MSG\\] (you|[A-Za-z0-9_*]+) → (you|[A-Za-z0-9_*]+)");
 
     public static String extractOtherPlayer(String line, String playerName) {
         Matcher m = DM_PATTERN.matcher(line);
