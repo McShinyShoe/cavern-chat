@@ -5,6 +5,9 @@ import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Config(name = "cavern-chat")
 public class CavernChatConfig implements ConfigData {
 
@@ -18,6 +21,8 @@ public class CavernChatConfig implements ConfigData {
     public PluginMessages pluginMessages = new PluginMessages();
     @ConfigEntry.Gui.CollapsibleObject
     public MoFoodMessages moFoodMessages = new MoFoodMessages();
+    @ConfigEntry.Gui.CollapsibleObject
+    public ColorfulDirectMessages colorfulDirectMessages = new ColorfulDirectMessages();
 
     public static class ChatChannels {
         public boolean globalMessages = true;
@@ -61,6 +66,11 @@ public class CavernChatConfig implements ConfigData {
         public FilterMode moFoodRerollQuest = FilterMode.DYNAMIC;
         @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
         public FilterMode moFoodNewSeason = FilterMode.DYNAMIC;
+    }
+
+    public static class ColorfulDirectMessages {
+        public boolean colorfulDirectMessageEnabled = true;
+        public List<DirectMessageColor> colorfulDirectMessageColors= new ArrayList<>();
     }
 
     public static CavernChatConfig getInstance() {
