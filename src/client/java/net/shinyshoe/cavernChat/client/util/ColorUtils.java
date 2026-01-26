@@ -15,7 +15,6 @@ public class ColorUtils {
         float[] hsv = new float[3];
         java.awt.Color.RGBtoHSB(r, g, b, hsv);
 
-        // hsv[0] = 0..1 hue, hsv[1] = sat, hsv[2] = value
         hsv[0] *= 360f;
         return hsv;
     }

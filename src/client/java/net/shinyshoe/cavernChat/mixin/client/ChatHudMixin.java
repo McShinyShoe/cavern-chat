@@ -5,7 +5,6 @@ import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.client.gui.hud.ChatHudLine;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.shinyshoe.cavernChat.CavernChat;
 import net.shinyshoe.cavernChat.client.ChatChannel;
 import net.shinyshoe.cavernChat.client.ChatVisibilityController;
 import net.shinyshoe.cavernChat.client.util.ChatUtils;
@@ -33,14 +32,13 @@ public abstract class ChatHudMixin {
             ChatHudAccessor acc = (ChatHudAccessor) chatHud;
             acc.invokeAddVisibleMessage(line);
             return;
-        };
+        }
         ChatVisibilityController.chatAdd(line);
     }
 
     @Inject(
             method = "addMessage(Lnet/minecraft/text/Text;)V",
-            at = @At("HEAD"),
-            cancellable = true
+            at = @At("HEAD")
     )
     private void addMessage(Text message, CallbackInfo ci) {
         if(!ServerUtils.isCavern()) return;
