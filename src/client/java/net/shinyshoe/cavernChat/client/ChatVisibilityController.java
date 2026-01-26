@@ -98,7 +98,32 @@ public final class ChatVisibilityController {
         return color;
     }
 
-    private static final Pattern DM_PATTERN = Pattern.compile("✉ \\[MSG\\] (you|\\w+) → (you|\\w+)");
+    private static final Pattern DM_PATTERN = Pattern.compile("✉ \\[MSG\\] (you|[A-Za-z0-9_]+) → (you|[A-Za-z0-9_]+)");
+
+    public static String extractOtherPlayer(String line, String playerName) {
+        Matcher m = DM_PATTERN.matcher(line);
+        if (!m.find()) return null;
+
+        String left  = m.group(1);
+        String right = m.group(2);
+
+        String other;
+        if ("you".equalsIgnoreCase(left)) {
+            other = right;
+        } else if ("you".equalsIgnoreCase(right)) {
+            other = left;
+        } else if (left.equalsIgnoreCase(playerName)) {
+            other = right;
+        } else if (right.equalsIgnoreCase(playerName)) {
+            other = left;
+        } else {
+            other = left;
+        }
+
+        if (other.equalsIgnoreCase(playerName)) return "self";
+        return other;
+    }
+
     public static void printChat(ChatType type, ChatHudLine line) {
         MinecraftClient client = MinecraftClient.getInstance();
         ChatHud chatHud = client.inGameHud.getChatHud();
@@ -110,19 +135,8 @@ public final class ChatVisibilityController {
                     return;
                 }
 
-                String str = line.content().getString();
-                Matcher m = DM_PATTERN.matcher(str);
-                if (!m.find()) {
-                    acc.invokeAddVisibleMessage(line);
-                    return;
-                }
-
-                String left  = m.group(1);
-                String right = m.group(2);
-
-                String player = "";
-                if ("you".equals(left))  player = right;
-                if ("you".equals(right)) player = left;
+                String selfName = MinecraftClient.getInstance().getSession().getUsername();
+                String player = extractOtherPlayer(line.content().getString(), selfName);
 
                 int dmColor = getDmColor(player);
 
