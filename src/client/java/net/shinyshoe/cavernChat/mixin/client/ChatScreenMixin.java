@@ -6,10 +6,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.Text;
-import net.shinyshoe.cavernChat.client.CavernChatConfig;
-import net.shinyshoe.cavernChat.client.ChatChannel;
-import net.shinyshoe.cavernChat.client.ChatFilter;
-import net.shinyshoe.cavernChat.client.ChatType;
+import net.shinyshoe.cavernChat.client.*;
 import net.shinyshoe.cavernChat.client.ui.FlatButton;
 import net.shinyshoe.cavernChat.client.ui.FlatToggleButton;
 import net.shinyshoe.cavernChat.client.util.ServerUtils;
@@ -222,43 +219,28 @@ public abstract class ChatScreenMixin {
 
     @Inject(method = "render", at = @At("HEAD"))
     private void cavernChat$renderHead(DrawContext context, int mouseX, int mouseY, float deltaTicks, CallbackInfo ci) {
-        if(!ServerUtils.isCavern()) return;
-        ChatChannel channel = ChatChannel.getCurrentActiveChannel();
-        if(channel == null) channel = ChatChannel.getCurrentDefaultChannel();
-        if(channel == null) {
-            chatInputOffset = 0;
-            return;
-        }
-
-        Text label = Text.of(channel.name());
-        TextRenderer tr = MinecraftClient.getInstance().textRenderer;
-        if(!Objects.equals(channel.name(), "Global")) chatInputOffset = tr.getWidth(label) + 4;
-        else chatInputOffset = 0;
+        ChatIndicator.updateIndicator();
     }
 
     @Inject(method = "render", at = @At("TAIL"))
     private void cavernChat$renderTail(DrawContext context, int mouseX, int mouseY, float deltaTicks, CallbackInfo ci) {
         if(!ServerUtils.isCavern()) return;
-        ChatChannel channel = ChatChannel.getCurrentActiveChannel();
-        if(channel == null) channel = ChatChannel.getCurrentDefaultChannel();
-        if(channel == null) this.chatField.setEditableColor(0xFFFFFFFF);
+        Text indicator = ChatIndicator.getText();
+        if(indicator == null) this.chatField.setEditableColor(0xFFFFFFFF);
         else {
-            this.chatField.setEditableColor(0xFF000000 + channel.color());
-            cavernChat$channelIndicator.setLabel(Text.literal(channel.name()));
-            cavernChat$channelIndicator.setDimensions(chatInputOffset, 12);
-            cavernChat$channelIndicator.setColor(0xFF000000 + channel.color());
+            this.chatField.setEditableColor(0xFF000000 + ChatIndicator.getInputColor());
+            cavernChat$channelIndicator.setLabel(ChatIndicator.getText());
+            cavernChat$channelIndicator.setDimensions(ChatIndicator.getOffset(), 12);
+            cavernChat$channelIndicator.setColor(0xFF000000 + ChatIndicator.getInputColor());
         }
 
-        int totalOffset = chatInputOffset + (chatInputOffset == 0 ? 0 : 2);
+        int totalOffset = ChatIndicator.getOffset() + (ChatIndicator.getOffset() == 0 ? 0 : 2);
 
         chatField.setX(4 + totalOffset);
         chatField.setWidth(((ChatScreen)(Object)this).width - 4 - totalOffset);
 
-        cavernChat$channelIndicator.visible = chatInputOffset != 0;
+        cavernChat$channelIndicator.visible = ChatIndicator.getOffset() != 0;
     }
-
-    @Unique
-    private int chatInputOffset = 0;
 
     @Redirect(
             method = "render",
@@ -278,7 +260,7 @@ public abstract class ChatScreenMixin {
             return;
         }
         context.fill(
-                x1 + chatInputOffset + (chatInputOffset == 0 ? 0 : 2),
+                x1 + ChatIndicator.getOffset() + (ChatIndicator.getOffset() == 0 ? 0 : 2),
                 y1,
                 x2,
                 y2,
