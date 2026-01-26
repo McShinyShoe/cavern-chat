@@ -49,10 +49,9 @@ public final class ChatVisibilityController {
         Text content = message.content();
 
         for (ChatFilter filter : ChatFilter.FILTERS.values()) {
-            if(!filter.getStatus()) continue;
             if(filter.checkText(content)) {
                 categorizedChatList.add(new CategorizedChat(filter.type(), message));
-                printChat(filter.type(), message);
+                if(filter.getStatus()) printChat(filter.type(), message);
             }
         }
     }
