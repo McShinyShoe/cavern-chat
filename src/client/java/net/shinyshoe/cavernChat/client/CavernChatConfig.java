@@ -23,6 +23,11 @@ public class CavernChatConfig implements ConfigData {
     public MoFoodMessages moFoodMessages = new MoFoodMessages();
     @ConfigEntry.Gui.CollapsibleObject
     public ColorfulDirectMessages colorfulDirectMessages = new ColorfulDirectMessages();
+    @ConfigEntry.Gui.CollapsibleObject
+    public SlimefunMessages slimefunMessages = new SlimefunMessages();
+    @ConfigEntry.Gui.CollapsibleObject
+    public DungeonMessages dungeonMessages = new DungeonMessages();
+
 
     public static class ChatChannels {
         public boolean globalMessages = true;
@@ -71,6 +76,16 @@ public class CavernChatConfig implements ConfigData {
     public static class ColorfulDirectMessages {
         public boolean colorfulDirectMessageEnabled = true;
         public List<DirectMessageColor> colorfulDirectMessageColors= new ArrayList<>();
+    }
+
+    public static class SlimefunMessages {
+        @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+        public FilterMode slimefunItemDisabled = FilterMode.DYNAMIC;
+    }
+
+    public static class DungeonMessages {
+        @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+        public FilterMode dungeonsDrownedPirate = FilterMode.DYNAMIC;
     }
 
     public static CavernChatConfig getInstance() {

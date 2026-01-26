@@ -41,7 +41,10 @@ public record ChatFilter(ChatType type, Predicate<Text> filter) {
         FILTERS.put(ChatType.MOFOOD_REROLL_QUEST, new ChatFilter(ChatType.MOFOOD_REROLL_QUEST, (Text text) -> text.getString().startsWith("MoFood") && text.getString().contains("rerolled the Quest")));
         FILTERS.put(ChatType.MOFOOD_NEW_SEASON, new ChatFilter(ChatType.MOFOOD_NEW_SEASON, (Text text) -> text.getString().startsWith("▅") && text.getString().contains("New Season")));
 
+        FILTERS.put(ChatType.SLIMEFUN_ITEM_DISABLED, new ChatFilter(ChatType.SLIMEFUN_ITEM_DISABLED, (Text text) -> text.getString().startsWith("Slimefun 4> [This Item")));
+
         FILTERS.put(ChatType.DUNGEON_DROWNED_PIRATE, new ChatFilter(ChatType.DUNGEON_DROWNED_PIRATE, (Text text) -> text.getString().startsWith("Drowned Pirate")));
+
         FILTERS.put(ChatType.MESSAGE_OTHER, new ChatFilter(ChatType.MESSAGE_OTHER, (Text text) -> {
             for (ChatFilter filter : FILTERS.values()) {
                 if (filter.type() == ChatType.MESSAGE_OTHER) continue;
@@ -66,6 +69,10 @@ public record ChatFilter(ChatType type, Predicate<Text> filter) {
         CONFIGURABLE_FILTERS.put(ChatType.MOFOOD_CHARITY, () -> CavernChatConfig.getInstance().moFoodMessages.moFoodCharity);
         CONFIGURABLE_FILTERS.put(ChatType.MOFOOD_REROLL_QUEST, () -> CavernChatConfig.getInstance().moFoodMessages.moFoodRerollQuest);
         CONFIGURABLE_FILTERS.put(ChatType.MOFOOD_NEW_SEASON, () -> CavernChatConfig.getInstance().moFoodMessages.moFoodNewSeason);
+
+        CONFIGURABLE_FILTERS.put(ChatType.SLIMEFUN_ITEM_DISABLED, () -> CavernChatConfig.getInstance().slimefunMessages.slimefunItemDisabled);
+
+        CONFIGURABLE_FILTERS.put(ChatType.DUNGEON_DROWNED_PIRATE, () -> CavernChatConfig.getInstance().dungeonMessages.dungeonsDrownedPirate);
     }
 
     public boolean checkText(Text text) {

@@ -22,9 +22,13 @@ public enum ChatType {
 
     LOTTERY,
     COINFLIP,
+
     MOFOOD_CHARITY,
     MOFOOD_REROLL_QUEST,
     MOFOOD_NEW_SEASON,
+
+    SLIMEFUN_ITEM_DISABLED,
+
     DUNGEON_DROWNED_PIRATE;
 
     public static final EnumMap<ChatType, Boolean> enabled = new EnumMap<>(ChatType.class);
