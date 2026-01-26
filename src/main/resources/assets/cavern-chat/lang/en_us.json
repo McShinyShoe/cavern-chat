@@ -1,6 +1,15 @@
 {
   "text.autoconfig.cavern-chat.title": "Cavern Chat Options",
 
+  "text.autoconfig.cavern-chat.option.chatChannels": "Chat Channels",
+  "text.autoconfig.cavern-chat.option.chatChannels.globalMessages": "Global Channel",
+  "text.autoconfig.cavern-chat.option.chatChannels.localMessages": "Local Channel",
+  "text.autoconfig.cavern-chat.option.chatChannels.partyMessages": "Party Channel",
+  "text.autoconfig.cavern-chat.option.chatChannels.townMessages": "Town Channel",
+  "text.autoconfig.cavern-chat.option.chatChannels.nationMessages": "Nation Channel",
+  "text.autoconfig.cavern-chat.option.chatChannels.dmMessages": "DM Channel",
+  "text.autoconfig.cavern-chat.option.chatChannels.otherMessages": "Other Channel",
+
   "text.autoconfig.cavern-chat.option.joinLeaveMessages": "Join/Leave Messages",
   "text.autoconfig.cavern-chat.option.joinLeaveMessages.playerJoinMessage": "Player Join",
   "text.autoconfig.cavern-chat.option.joinLeaveMessages.playerLeaveMessage": "Player Leave",
@@ -18,5 +27,18 @@
   "text.autoconfig.cavern-chat.option.moFoodMessages": "MoFood Messages",
   "text.autoconfig.cavern-chat.option.moFoodMessages.moFoodCharity": "Charity",
   "text.autoconfig.cavern-chat.option.moFoodMessages.moFoodRerollQuest": "Reroll Quest",
-  "text.autoconfig.cavern-chat.option.moFoodMessages.moFoodNewSeason": "New Season"
+  "text.autoconfig.cavern-chat.option.moFoodMessages.moFoodNewSeason": "New Season",
+
+  "text.autoconfig.cavern-chat.option.slimefunMessages": "Slimefun Messages",
+  "text.autoconfig.cavern-chat.option.slimefunMessages.slimefunItemDisabled": "Item Disabled",
+
+  "text.autoconfig.cavern-chat.option.dungeonMessages": "Dungeon Messages",
+  "text.autoconfig.cavern-chat.option.dungeonMessages.dungeonsDrownedPirate": "Drowned Pirate",
+
+  "text.autoconfig.cavern-chat.option.colorfulDirectMessages": "Colorful Direct Messages",
+  "text.autoconfig.cavern-chat.option.colorfulDirectMessages.colorfulDirectMessageEnabled": "Enabled",
+  "text.autoconfig.cavern-chat.option.colorfulDirectMessages.colorfulDirectMessageColors": "Colors",
+  "text.autoconfig.cavern-chat.option.DirectMessageColor": "DM Color",
+  "text.autoconfig.cavern-chat.option.DirectMessageColor.player": "Player Name",
+  "text.autoconfig.cavern-chat.option.DirectMessageColor.color": "Color"
 }
