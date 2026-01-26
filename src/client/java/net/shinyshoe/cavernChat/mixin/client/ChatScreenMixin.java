@@ -225,13 +225,16 @@ public abstract class ChatScreenMixin {
     @Inject(method = "render", at = @At("TAIL"))
     private void cavernChat$renderTail(DrawContext context, int mouseX, int mouseY, float deltaTicks, CallbackInfo ci) {
         if(!ServerUtils.isCavern()) return;
+
+        Integer inputColor = ChatIndicator.getInputColor();
+        if(inputColor == null) this.chatField.setEditableColor(0xFFFFFFFF);
+        else this.chatField.setEditableColor(0xFF000000 + inputColor);
+
         Text indicator = ChatIndicator.getText();
-        if(indicator == null) this.chatField.setEditableColor(0xFFFFFFFF);
-        else {
-            this.chatField.setEditableColor(0xFF000000 + ChatIndicator.getInputColor());
+        if(indicator != null){
             cavernChat$channelIndicator.setLabel(ChatIndicator.getText());
             cavernChat$channelIndicator.setDimensions(ChatIndicator.getOffset(), 12);
-            cavernChat$channelIndicator.setColor(0xFF000000 + ChatIndicator.getInputColor());
+            if(inputColor != null) cavernChat$channelIndicator.setColor(0xFF000000 + inputColor);
         }
 
         int totalOffset = ChatIndicator.getOffset() + (ChatIndicator.getOffset() == 0 ? 0 : 2);

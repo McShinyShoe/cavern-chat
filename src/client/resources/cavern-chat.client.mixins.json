@@ -6,6 +6,7 @@
   "client": [
     "ChatHudAccessor",
     "ChatHudMixin",
+    "ChatScreenAccessor",
     "ChatScreenMixin",
     "ScreenAccessor"
   ],

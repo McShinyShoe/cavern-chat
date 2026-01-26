@@ -138,6 +138,8 @@ public final class ChatVisibilityController {
                 String selfName = MinecraftClient.getInstance().getSession().getUsername();
                 String player = extractOtherPlayer(line.content().getString(), selfName);
 
+                CavernChatConfig.getInstance().lastDMPerson = player;
+
                 int dmColor = getDmColor(player);
 
                 MutableText newText = Text.empty();

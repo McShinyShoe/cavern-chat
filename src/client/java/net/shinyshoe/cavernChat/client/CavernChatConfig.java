@@ -28,6 +28,8 @@ public class CavernChatConfig implements ConfigData {
     @ConfigEntry.Gui.CollapsibleObject
     public ColorfulDirectMessages colorfulDirectMessages = new ColorfulDirectMessages();
 
+    @ConfigEntry.Gui.Excluded
+    public String lastDMPerson;
 
     public static class ChatChannels {
         public boolean globalMessages = true;
