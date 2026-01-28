@@ -48,6 +48,7 @@ public class ChatIndicator {
                     return;
                 };
                 if(typed.startsWith("/r ")) {
+                    if(CavernChatConfig.getInstance().lastDMPerson == null) return;
                     currentIndicator.text = Text.literal(CavernChatConfig.getInstance().lastDMPerson);
                     currentIndicator.inputColor = ChatVisibilityController.getDmColor(CavernChatConfig.getInstance().lastDMPerson);
                     return;
