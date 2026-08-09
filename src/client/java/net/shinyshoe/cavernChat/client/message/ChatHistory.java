@@ -69,6 +69,8 @@ public final class ChatHistory {
 
     private static void print(ChatType type, ChatHudLine line) {
         ChatHudAccessor accessor = accessor();
+        CavernChat.LOGGER.info(line.toString());
+
         if (accessor == null)
             return;
 

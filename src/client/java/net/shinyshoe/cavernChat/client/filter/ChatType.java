@@ -13,6 +13,7 @@ public enum ChatType {
     MESSAGE_PARTY,
     MESSAGE_DM,
     MESSAGE_MARRY,
+    MESSAGE_ADMIN,
     MESSAGE_OTHER,
 
     PLAYER_JOIN,

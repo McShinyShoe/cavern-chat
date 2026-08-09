@@ -9,13 +9,16 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-/** The rule for recognising each {@link ChatType}, in the order they're tried. */
+/**
+ * The rule for recognising each {@link ChatType}, in the order they're tried.
+ */
 public final class ChatFilterRegistry {
 
     private static final int COLOR_LOCAL = 0xFFD700;
     private static final int COLOR_PARTY = 0x64F581;
     private static final int COLOR_TOWN = Formatting.GREEN.getColorValue();
     private static final int COLOR_NATION = Formatting.GOLD.getColorValue();
+    private static final int COLOR_ADMIN = Formatting.BLUE.getColorValue();
     private static final int COLOR_SEPARATOR = Formatting.GRAY.getColorValue();
 
     private static final Map<ChatType, ChatFilter> FILTERS = new LinkedHashMap<>();
@@ -35,6 +38,8 @@ public final class ChatFilterRegistry {
                 && TextUtils.hasColoredChar(text, '[', COLOR_LOCAL));
         define(ChatType.MESSAGE_PARTY, text -> isPlayerChat(text)
                 && TextUtils.hasColoredChar(text, '[', COLOR_PARTY));
+        define(ChatType.MESSAGE_ADMIN, startsWith("[STAFF]")
+                .or(contains("[STAFF]").and(text -> TextUtils.hasColoredChar(text, '[', COLOR_ADMIN))));
         define(ChatType.MESSAGE_DM, startsWith("✉"));
 
         define(ChatType.PLAYER_JOIN, startsWith("[+]"));

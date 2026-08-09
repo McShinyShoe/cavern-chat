@@ -8,6 +8,7 @@
   "text.autoconfig.cavern-chat.option.chatChannels.townMessages": "Town Channel",
   "text.autoconfig.cavern-chat.option.chatChannels.nationMessages": "Nation Channel",
   "text.autoconfig.cavern-chat.option.chatChannels.dmMessages": "DM Channel",
+  "text.autoconfig.cavern-chat.option.chatChannels.adminMessages": "Admin Channel",
   "text.autoconfig.cavern-chat.option.chatChannels.otherMessages": "Other Channel",
 
   "text.autoconfig.cavern-chat.option.joinLeaveMessages": "Join/Leave Messages",

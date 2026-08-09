@@ -33,6 +33,7 @@ public final class ChannelIndicator {
         COMMAND_CHANNELS.put("/pc ", ChannelRegistry.PARTY);
         COMMAND_CHANNELS.put("/tc ", ChannelRegistry.TOWN);
         COMMAND_CHANNELS.put("/nc ", ChannelRegistry.NATION);
+        COMMAND_CHANNELS.put("/a ", ChannelRegistry.ADMIN);
     }
 
     private static Text text;

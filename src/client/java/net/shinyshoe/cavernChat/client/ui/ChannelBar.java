@@ -51,6 +51,8 @@ public final class ChannelBar {
                     visible -> channels().nationMessages = visible),
             new ChannelToggle(ChatType.MESSAGE_DM, "✉ DM", 0xFFEEC65D, 30, null,
                     visible -> channels().dmMessages = visible),
+            new ChannelToggle(ChatType.MESSAGE_ADMIN, "🔑 Admin", 0xFF5454FC, 46, "a",
+                    visible -> channels().dmMessages = visible),
             new ChannelToggle(ChatType.MESSAGE_OTHER, "Other", 0xFFFFFFFF, 34, null,
                     visible -> channels().otherMessages = visible));
 

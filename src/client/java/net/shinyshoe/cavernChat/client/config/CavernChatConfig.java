@@ -39,6 +39,7 @@ public class CavernChatConfig implements ConfigData {
         public boolean nationMessages = true;
         public boolean dmMessages = true;
         public boolean otherMessages = true;
+        public boolean adminMessages = false;
     }
 
     public static class JoinLeaveMessages {

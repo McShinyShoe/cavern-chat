@@ -7,11 +7,12 @@ import java.util.Map;
 /** The channels The Cavern has, and how to look one up. */
 public final class ChannelRegistry {
 
-    public static final ChatChannel GLOBAL = new ChatChannel(0xfcfcfc, "Global");
+    public static final ChatChannel GLOBAL = new ChatChannel(0xFCFCFC, "Global");
     public static final ChatChannel LOCAL = new ChatChannel(0xFFD700, "Local");
-    public static final ChatChannel PARTY = new ChatChannel(0x64F581, "Party");
+    public static final ChatChannel PARTY = new ChatChannel(0xDF9EFF, "Party");
     public static final ChatChannel TOWN = new ChatChannel(Formatting.GREEN.getColorValue(), "Town");
     public static final ChatChannel NATION = new ChatChannel(Formatting.GOLD.getColorValue(), "Nation");
+    public static final ChatChannel ADMIN = new ChatChannel(Formatting.BLUE.getColorValue(), "Admin");
 
     private static final int DM_COLOR = 0xebc45c;
 
@@ -21,7 +22,8 @@ public final class ChannelRegistry {
             'l', LOCAL,
             'p', PARTY,
             't', TOWN,
-            'n', NATION);
+            'b', NATION,
+            'a', ADMIN);
 
     private ChannelRegistry() {
     }

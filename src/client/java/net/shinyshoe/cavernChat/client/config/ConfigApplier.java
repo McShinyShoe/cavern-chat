@@ -62,6 +62,7 @@ public final class ConfigApplier {
         ChatVisibility.set(ChatType.MESSAGE_TOWN, config.chatChannels.townMessages);
         ChatVisibility.set(ChatType.MESSAGE_NATION, config.chatChannels.nationMessages);
         ChatVisibility.set(ChatType.MESSAGE_DM, config.chatChannels.dmMessages);
+        ChatVisibility.set(ChatType.MESSAGE_ADMIN, config.chatChannels.adminMessages);
         ChatVisibility.set(ChatType.MESSAGE_OTHER, config.chatChannels.otherMessages);
     }
 
