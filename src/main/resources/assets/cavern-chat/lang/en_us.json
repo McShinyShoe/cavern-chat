@@ -1,6 +1,9 @@
 {
   "text.autoconfig.cavern-chat.title": "Cavern Chat Options",
 
+  "text.autoconfig.cavern-chat.option.adminFeatures": "Admin Features",
+  "text.autoconfig.cavern-chat.option.adminFeatures.@Tooltip": "Staff only.",
+
   "text.autoconfig.cavern-chat.option.chatChannels": "Chat Channels",
   "text.autoconfig.cavern-chat.option.chatChannels.globalMessages": "Global Channel",
   "text.autoconfig.cavern-chat.option.chatChannels.localMessages": "Local Channel",
@@ -9,6 +12,7 @@
   "text.autoconfig.cavern-chat.option.chatChannels.nationMessages": "Nation Channel",
   "text.autoconfig.cavern-chat.option.chatChannels.dmMessages": "DM Channel",
   "text.autoconfig.cavern-chat.option.chatChannels.adminMessages": "Admin Channel",
+  "text.autoconfig.cavern-chat.option.chatChannels.adminMessages.@Tooltip": "Needs Admin Features.",
   "text.autoconfig.cavern-chat.option.chatChannels.otherMessages": "Other Channel",
 
   "text.autoconfig.cavern-chat.option.joinLeaveMessages": "Join/Leave Messages",

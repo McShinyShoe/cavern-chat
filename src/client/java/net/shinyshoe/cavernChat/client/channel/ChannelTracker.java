@@ -3,6 +3,7 @@ package net.shinyshoe.cavernChat.client.channel;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.shinyshoe.cavernChat.client.config.CavernChatConfig;
 import net.shinyshoe.cavernChat.client.util.TextUtils;
 
 /**
@@ -13,6 +14,7 @@ public final class ChannelTracker {
 
     private static final String JOIN_MARKER = "WELCOME TO THE CAVERN";
     private static final String SWITCH_PREFIX = "You have switched";
+    private static final String ADMIN_PREFIX = " - admin";
 
     private static final int CHANNEL_CHAR_INDEX = 3;
     private static final int SWITCH_CHAR_INDEX = 21;
@@ -46,6 +48,9 @@ public final class ChannelTracker {
         if (line.contains(JOIN_MARKER))
             requestCurrentChannel();
 
+        if (line.startsWith(ADMIN_PREFIX))
+            unlockAdminFeatures();
+
         char letter = 0;
         if (TextUtils.hasColoredChar(message, '✎', Formatting.GOLD.getColorValue())) {
             letter = charAt(line, CHANNEL_CHAR_INDEX);
@@ -59,6 +64,15 @@ public final class ChannelTracker {
         ChatChannel channel = ChannelRegistry.byCommandChar(letter);
         if (channel != null)
             setActive(channel);
+    }
+
+    private static void unlockAdminFeatures() {
+        CavernChatConfig config = CavernChatConfig.getInstance();
+        if (config.adminFeatures)
+            return;
+
+        config.adminFeatures = true;
+        CavernChatConfig.save();
     }
 
     private static char charAt(String line, int index) {

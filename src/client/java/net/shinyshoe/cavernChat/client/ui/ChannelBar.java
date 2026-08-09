@@ -64,11 +64,12 @@ public final class ChannelBar {
 
     public static Widgets create(int screenHeight) {
         int y = screenHeight - TOGGLE_ROW_OFFSET;
+        List<ChannelToggle> row = activeToggles();
         List<FlatToggleButton> toggles = new ArrayList<>();
 
         int x = MARGIN;
-        for (int i = 0; i < TOGGLES.size(); i++) {
-            ChannelToggle toggle = TOGGLES.get(i);
+        for (int i = 0; i < row.size(); i++) {
+            ChannelToggle toggle = row.get(i);
             int index = i;
 
             toggles.add(new FlatToggleButton(
@@ -99,6 +100,15 @@ public final class ChannelBar {
                 NOTHING);
 
         return new Widgets(reset, createIndicator(screenHeight), toggles);
+    }
+
+    private static List<ChannelToggle> activeToggles() {
+        if (CavernChatConfig.getInstance().adminFeatures)
+            return TOGGLES;
+
+        return TOGGLES.stream()
+                .filter(toggle -> toggle.type() != ChatType.MESSAGE_ADMIN)
+                .toList();
     }
 
     private static FlatToggleButton createIndicator(int screenHeight) {

@@ -11,6 +11,11 @@ import java.util.List;
 @Config(name = "cavern-chat")
 public class CavernChatConfig implements ConfigData {
 
+    /** Staff-only extras. Off unless someone edits the config file by hand. */
+    @ConfigEntry.Gui.Tooltip
+    @ReadOnly
+    public boolean adminFeatures = false;
+
     @ConfigEntry.Gui.CollapsibleObject
     public ChatChannels chatChannels = new ChatChannels();
     @ConfigEntry.Gui.CollapsibleObject
@@ -39,6 +44,9 @@ public class CavernChatConfig implements ConfigData {
         public boolean nationMessages = true;
         public boolean dmMessages = true;
         public boolean otherMessages = true;
+
+        @ConfigEntry.Gui.Tooltip
+        @RequiresAdminFeatures
         public boolean adminMessages = false;
     }
 
@@ -93,5 +101,9 @@ public class CavernChatConfig implements ConfigData {
 
     public static CavernChatConfig getInstance() {
         return AutoConfig.getConfigHolder(CavernChatConfig.class).getConfig();
+    }
+
+    public static void save() {
+        AutoConfig.getConfigHolder(CavernChatConfig.class).save();
     }
 }

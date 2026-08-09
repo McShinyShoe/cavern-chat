@@ -7,6 +7,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.util.ActionResult;
 import net.shinyshoe.cavernChat.client.config.CavernChatConfig;
 import net.shinyshoe.cavernChat.client.config.ConfigApplier;
+import net.shinyshoe.cavernChat.client.config.ConfigLocks;
 import net.shinyshoe.cavernChat.client.message.ChatHistory;
 
 public class CavernChatClient implements ClientModInitializer {
@@ -14,6 +15,7 @@ public class CavernChatClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         AutoConfig.register(CavernChatConfig.class, GsonConfigSerializer::new);
+        ConfigLocks.register();
 
         ConfigHolder<CavernChatConfig> holder = AutoConfig.getConfigHolder(CavernChatConfig.class);
         holder.registerSaveListener(CavernChatClient::onConfigChanged);

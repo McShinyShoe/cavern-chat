@@ -64,11 +64,16 @@ public final class ChannelIndicator {
 
     private static void updateForCommand(String typed) {
         for (Map.Entry<String, ChatChannel> entry : COMMAND_CHANNELS.entrySet()) {
-            if (typed.startsWith(entry.getKey())) {
-                ChatChannel channel = entry.getValue();
-                show(Text.literal(channel.name()), channel.color());
-                return;
-            }
+            if (!typed.startsWith(entry.getKey()))
+                continue;
+
+            ChatChannel channel = entry.getValue();
+            // Without admin features the tag stays off, the command still sends.
+            if (channel == ChannelRegistry.ADMIN && !CavernChatConfig.getInstance().adminFeatures)
+                break;
+
+            show(Text.literal(channel.name()), channel.color());
+            return;
         }
 
         if (typed.startsWith(REPLY_COMMAND)) {
