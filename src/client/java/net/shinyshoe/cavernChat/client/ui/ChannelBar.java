@@ -43,7 +43,7 @@ public final class ChannelBar {
                     visible -> channels().globalMessages = visible),
             new ChannelToggle(ChatType.MESSAGE_LOCAL, "⛳ Local", 0xFFFCD400, 46, "lc",
                     visible -> channels().localMessages = visible),
-            new ChannelToggle(ChatType.MESSAGE_PARTY, "🎂 Party", 0xFF63f27f, 46, "pc",
+            new ChannelToggle(ChatType.MESSAGE_PARTY, "🎂 Party", 0xFFDF9EFF, 46, "pc",
                     visible -> channels().partyMessages = visible),
             new ChannelToggle(ChatType.MESSAGE_TOWN, "🏚 Town", 0xFF54fc54, 42, "tc",
                     visible -> channels().townMessages = visible),

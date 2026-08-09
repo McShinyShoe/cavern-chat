@@ -15,7 +15,7 @@ import java.util.function.Predicate;
 public final class ChatFilterRegistry {
 
     private static final int COLOR_LOCAL = 0xFFD700;
-    private static final int COLOR_PARTY = 0x64F581;
+    private static final int COLOR_PARTY = 0xDF9EFF;
     private static final int COLOR_TOWN = Formatting.GREEN.getColorValue();
     private static final int COLOR_NATION = Formatting.GOLD.getColorValue();
     private static final int COLOR_ADMIN = Formatting.BLUE.getColorValue();
