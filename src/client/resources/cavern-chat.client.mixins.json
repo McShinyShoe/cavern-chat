@@ -4,11 +4,11 @@
   "package": "net.shinyshoe.cavernChat.mixin.client",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "ChatHudAccessor",
     "ChatHudMixin",
-    "ChatScreenAccessor",
     "ChatScreenMixin",
-    "ScreenAccessor"
+    "accessor.ChatHudAccessor",
+    "accessor.ChatScreenAccessor",
+    "accessor.ScreenAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

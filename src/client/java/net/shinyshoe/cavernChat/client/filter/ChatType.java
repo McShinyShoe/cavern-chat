@@ -1,12 +1,15 @@
-package net.shinyshoe.cavernChat.client;
+package net.shinyshoe.cavernChat.client.filter;
 
-import java.util.EnumMap;
-
+/**
+ * Every category a chat line can be sorted into. {@link ChatFilterRegistry}
+ * owns the rule that recognises each one, {@link ChatVisibility} whether it is
+ * currently shown.
+ */
 public enum ChatType {
     MESSAGE_GLOBAL,
     MESSAGE_TOWN,
     MESSAGE_NATION,
-    MESSAGE_LOCAL ,
+    MESSAGE_LOCAL,
     MESSAGE_PARTY,
     MESSAGE_DM,
     MESSAGE_MARRY,
@@ -29,12 +32,5 @@ public enum ChatType {
 
     SLIMEFUN_ITEM_DISABLED,
 
-    DUNGEON_DROWNED_PIRATE;
-
-    public static final EnumMap<ChatType, Boolean> enabled = new EnumMap<>(ChatType.class);
-    static {
-        for (ChatType type : ChatType.values()) {
-            enabled.put(type, true);
-        }
-    }
+    DUNGEON_DROWNED_PIRATE
 }
