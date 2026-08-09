@@ -1,6 +1,10 @@
 package net.shinyshoe.cavernChat.client.ui.widget;
 
+//? if >=1.21.9 {
 import net.minecraft.client.gui.Click;
+//?} else {
+/*import net.minecraft.client.gui.screen.Screen;
+*///?}
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.navigation.GuiNavigation;
 import net.minecraft.client.gui.navigation.GuiNavigationPath;
@@ -33,6 +37,7 @@ public class FlatButton extends ClickableWidget {
         WidgetStyle.renderLabel(ctx, this, label, color);
     }
 
+    //? if >=1.21.9 {
     @Override
     public void onClick(Click click, boolean doubled) {
         if (!click.hasShift() && !click.hasCtrl())
@@ -42,6 +47,17 @@ public class FlatButton extends ClickableWidget {
         if (click.hasCtrl())
             this.onCtrlClick.run();
     }
+    //?} else {
+    /*@Override
+    public void onClick(double mouseX, double mouseY) {
+        if (!Screen.hasShiftDown() && !Screen.hasControlDown())
+            click();
+        if (Screen.hasShiftDown())
+            this.onShiftClick.run();
+        if (Screen.hasControlDown())
+            this.onCtrlClick.run();
+    }
+    *///?}
 
     @Override
     protected void appendClickableNarrations(NarrationMessageBuilder builder) {
