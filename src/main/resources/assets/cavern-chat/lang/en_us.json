@@ -4,6 +4,9 @@
   "text.autoconfig.cavern-chat.option.adminFeatures": "Admin Features",
   "text.autoconfig.cavern-chat.option.adminFeatures.@Tooltip": "Staff only.",
 
+  "text.autoconfig.cavern-chat.option.debugEnabled": "Debug Enabled",
+  "text.autoconfig.cavern-chat.option.debugEnabled.@Tooltip": "Writes every printed chat line to the game log.",
+
   "text.autoconfig.cavern-chat.option.chatChannels": "Chat Channels",
   "text.autoconfig.cavern-chat.option.chatChannels.globalMessages": "Global Channel",
   "text.autoconfig.cavern-chat.option.chatChannels.localMessages": "Local Channel",

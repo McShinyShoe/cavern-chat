@@ -69,7 +69,8 @@ public final class ChatHistory {
 
     private static void print(ChatType type, ChatHudLine line) {
         ChatHudAccessor accessor = accessor();
-        CavernChat.LOGGER.info(line.toString());
+        if (debugEnabled())
+            CavernChat.LOGGER.info(line.toString());
 
         if (accessor == null)
             return;
@@ -78,6 +79,10 @@ public final class ChatHistory {
             accessor.invokeAddVisibleMessage(DirectMessages.recolor(line));
         else
             accessor.invokeAddVisibleMessage(line);
+    }
+
+    private static boolean debugEnabled() {
+        return CavernChatConfig.getInstance().debugEnabled;
     }
 
     private static boolean colorfulDirectMessagesEnabled() {
