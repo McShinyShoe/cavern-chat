@@ -1,8 +1,8 @@
-package net.shinyshoe.cavernChat.client;
+package net.shinyshoe.cavernChat.client.config;
 
-import me.shedaniel.autoconfig.AutoConfig;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
+import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;

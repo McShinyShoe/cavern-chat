@@ -1,4 +1,4 @@
-package net.shinyshoe.cavernChat.mixin.client;
+package net.shinyshoe.cavernChat.mixin.client.accessor;
 
 import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.client.gui.hud.ChatHudLine;

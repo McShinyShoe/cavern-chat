@@ -5,8 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CavernChat implements ModInitializer {
-    public static final String MOD_IO = "cavern-chat";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_IO);
+    public static final String MOD_ID = "cavern-chat";
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     @Override
     public void onInitialize() {

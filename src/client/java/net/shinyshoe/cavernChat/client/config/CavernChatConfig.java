@@ -1,4 +1,4 @@
-package net.shinyshoe.cavernChat.client;
+package net.shinyshoe.cavernChat.client.config;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
@@ -87,7 +87,7 @@ public class CavernChatConfig implements ConfigData {
 
     public static class ColorfulDirectMessages {
         public boolean colorfulDirectMessageEnabled = true;
-        public List<DirectMessageColor> colorfulDirectMessageColors= new ArrayList<>();
+        public List<DirectMessageColor> colorfulDirectMessageColors = new ArrayList<>();
     }
 
     public static CavernChatConfig getInstance() {
