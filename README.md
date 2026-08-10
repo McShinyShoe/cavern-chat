@@ -16,15 +16,15 @@ https://github.com/user-attachments/assets/29d998f1-e60b-4251-82b3-3cb52a50ea2e
 
 ## Supported Minecraft Versions
 
-| Jar             | Runs on                |
-| --------------- | ---------------------- |
-| `1.4.1+1.21.1`  | 1.21, 1.21.1           |
-| `1.4.1+1.21.3`  | 1.21.2, 1.21.3         |
-| `1.4.1+1.21.4`  | 1.21.4                 |
-| `1.4.1+1.21.5`  | 1.21.5                 |
-| `1.4.1+1.21.8`  | 1.21.6, 1.21.7, 1.21.8 |
-| `1.4.1+1.21.10` | 1.21.9, 1.21.10        |
-| `1.4.1+1.21.11` | 1.21.11                |
+| Minecraft Version      | Download                                                                                                                          |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| 1.21, 1.21.1           | [cavern-chat-1.5.0+1.21.1.jar](https://github.com/McShinyShoe/cavern-chat/releases/download/1.5.0/cavern-chat-1.5.0+1.21.1.jar)   |
+| 1.21.2, 1.21.3         | [cavern-chat-1.5.0+1.21.3.jar](https://github.com/McShinyShoe/cavern-chat/releases/download/1.5.0/cavern-chat-1.5.0+1.21.3.jar)   |
+| 1.21.4                 | [cavern-chat-1.5.0+1.21.4.jar](https://github.com/McShinyShoe/cavern-chat/releases/download/1.5.0/cavern-chat-1.5.0+1.21.4.jar)   |
+| 1.21.5                 | [cavern-chat-1.5.0+1.21.5.jar](https://github.com/McShinyShoe/cavern-chat/releases/download/1.5.0/cavern-chat-1.5.0+1.21.5.jar)   |
+| 1.21.6, 1.21.7, 1.21.8 | [cavern-chat-1.5.0+1.21.8.jar](https://github.com/McShinyShoe/cavern-chat/releases/download/1.5.0/cavern-chat-1.5.0+1.21.8.jar)   |
+| 1.21.9, 1.21.10        | [cavern-chat-1.5.0+1.21.10.jar](https://github.com/McShinyShoe/cavern-chat/releases/download/1.5.0/cavern-chat-1.5.0+1.21.10.jar) |
+| 1.21.11                | [cavern-chat-1.5.0+1.21.11.jar](https://github.com/McShinyShoe/cavern-chat/releases/download/1.5.0/cavern-chat-1.5.0+1.21.11.jar) |
 
 ## Building
 
