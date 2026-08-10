@@ -24,6 +24,7 @@ public final class ConfigApplier {
         MODES.put(ChatType.VOTE, () -> config().serverMessages.vote);
         MODES.put(ChatType.MOTD, () -> config().serverMessages.motd);
         MODES.put(ChatType.CRATE_OPEN, () -> config().serverMessages.crateOpen);
+        MODES.put(ChatType.PLAYER_DEATH, () -> config().serverMessages.playerDeath);
 
         MODES.put(ChatType.LOTTERY, () -> config().pluginMessages.lottery);
         MODES.put(ChatType.COINFLIP, () -> config().pluginMessages.coinFlip);

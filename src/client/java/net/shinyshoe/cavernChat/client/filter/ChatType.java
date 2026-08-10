@@ -23,6 +23,7 @@ public enum ChatType {
     VOTE,
     MOTD,
     CRATE_OPEN,
+    PLAYER_DEATH,
 
     LOTTERY,
     COINFLIP,

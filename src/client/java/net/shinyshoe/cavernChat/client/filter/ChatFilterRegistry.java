@@ -64,6 +64,8 @@ public final class ChatFilterRegistry {
 
         define(ChatType.DUNGEON_DROWNED_PIRATE, startsWith("Drowned Pirate"));
 
+        define(ChatType.PLAYER_DEATH, startsWith("☠ "));
+
         // Registered last: "Other" is whatever no earlier rule claimed.
         define(ChatType.MESSAGE_OTHER, text -> {
             for (ChatFilter filter : FILTERS.values()) {

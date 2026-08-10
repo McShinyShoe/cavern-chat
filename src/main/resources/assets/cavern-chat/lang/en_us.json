@@ -27,6 +27,7 @@
   "text.autoconfig.cavern-chat.option.serverMessages.vote": "Vote",
   "text.autoconfig.cavern-chat.option.serverMessages.motd": "MOTD",
   "text.autoconfig.cavern-chat.option.serverMessages.crateOpen": "Crate Open",
+  "text.autoconfig.cavern-chat.option.serverMessages.playerDeath": "Player Death",
 
   "text.autoconfig.cavern-chat.option.pluginMessages": "Plugin Messages",
   "text.autoconfig.cavern-chat.option.pluginMessages.lottery": "Lottery",
