@@ -56,7 +56,7 @@ public final class ChatFilterRegistry {
         define(ChatType.LOTTERY, startsWith("LOTTERY"));
         define(ChatType.COINFLIP, contains("ᴄᴏɪɴꜰʟɪᴘ"));
 
-        define(ChatType.MOFOOD_CHARITY, startsWith("Charity"));
+        define(ChatType.MOFOOD_CHARITY, startsWith("ᴄʜᴀʀɪᴛʏ"));
         define(ChatType.MOFOOD_REROLL_QUEST, startsWith("MoFood").and(contains("rerolled the Quest")));
         define(ChatType.MOFOOD_NEW_SEASON, startsWith("▅").and(contains("New Season")));
 
