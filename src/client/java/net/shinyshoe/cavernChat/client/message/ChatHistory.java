@@ -13,6 +13,7 @@ import net.shinyshoe.cavernChat.mixin.client.accessor.ChatHudAccessor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Controller that handles chat history.
@@ -69,8 +70,15 @@ public final class ChatHistory {
 
     private static void print(ChatType type, ChatHudLine line) {
         ChatHudAccessor accessor = accessor();
-        if (debugEnabled())
+        if (debugEnabled()) {
+            String content = line.content().getString();
+            CavernChat.LOGGER.info("'" + content + "'");
+            CavernChat.LOGGER.info(content.codePoints()
+                    .limit(8)
+                    .mapToObj(cp -> String.format("U+%04X", cp))
+                    .collect(Collectors.joining(" ")));
             CavernChat.LOGGER.info(line.toString());
+        }
 
         if (accessor == null)
             return;
