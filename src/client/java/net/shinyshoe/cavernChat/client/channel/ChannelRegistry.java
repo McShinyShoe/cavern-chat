@@ -22,7 +22,7 @@ public final class ChannelRegistry {
             'l', LOCAL,
             'p', PARTY,
             't', TOWN,
-            'b', NATION,
+            'n', NATION,
             'a', ADMIN);
 
     private ChannelRegistry() {
