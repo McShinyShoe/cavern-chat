@@ -31,6 +31,8 @@ public final class ConfigApplier {
 
         MODES.put(ChatType.MOFOOD_CHARITY, () -> config().moFoodMessages.moFoodCharity);
         MODES.put(ChatType.MOFOOD_REROLL_QUEST, () -> config().moFoodMessages.moFoodRerollQuest);
+        MODES.put(ChatType.MOFOOD_REROLL_BOOSTED_CONSUMABLE,
+                () -> config().moFoodMessages.moFoodRerollBoostedConsumable);
         MODES.put(ChatType.MOFOOD_NEW_SEASON, () -> config().moFoodMessages.moFoodNewSeason);
 
         MODES.put(ChatType.SLIMEFUN_ITEM_DISABLED, () -> config().slimefunMessages.slimefunItemDisabled);

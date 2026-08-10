@@ -58,6 +58,8 @@ public final class ChatFilterRegistry {
 
         define(ChatType.MOFOOD_CHARITY, startsWith("ᴄʜᴀʀɪᴛʏ"));
         define(ChatType.MOFOOD_REROLL_QUEST, startsWith("MoFood").and(contains("rerolled the Quest")));
+        define(ChatType.MOFOOD_REROLL_BOOSTED_CONSUMABLE,
+                startsWith("MoFood").and(contains("rerolled the Boosted Consumable")));
         define(ChatType.MOFOOD_NEW_SEASON, startsWith("▅").and(contains("New Season")));
 
         define(ChatType.SLIMEFUN_ITEM_DISABLED, startsWith("Slimefun 4> [This Item"));

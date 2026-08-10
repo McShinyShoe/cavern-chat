@@ -86,6 +86,8 @@ public class CavernChatConfig implements ConfigData {
         @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
         public FilterMode moFoodRerollQuest = FilterMode.DYNAMIC;
         @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+        public FilterMode moFoodRerollBoostedConsumable = FilterMode.DYNAMIC;
+        @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
         public FilterMode moFoodNewSeason = FilterMode.DYNAMIC;
     }
 
