@@ -2,6 +2,13 @@
 
 <!-- The section matching mod_version is the changelog for Modrinth and the GitHub release, see HOW-TO-PUBLISH.md -->
 
+## 1.5.1
+- Added support for 26.1-26.3
+- Added player death messages
+- Added MoFood reroll boosted consumable
+- Updated MoFood charity message
+- Fixed channel indicator not recognizing when changing to nation chat
+
 ## 1.5.0
 - Fixed party chat still using the old color
 - Added Admin Chat integration
