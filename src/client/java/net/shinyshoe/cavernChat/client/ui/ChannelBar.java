@@ -1,7 +1,7 @@
 package net.shinyshoe.cavernChat.client.ui;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.shinyshoe.cavernChat.client.config.CavernChatConfig;
 import net.shinyshoe.cavernChat.client.filter.ChatType;
 import net.shinyshoe.cavernChat.client.filter.ChatVisibility;
@@ -76,7 +76,7 @@ public final class ChannelBar {
                     x,
                     y,
                     ChatVisibility.isVisible(toggle.type()),
-                    Text.of(toggle.label()),
+                    Component.literal(toggle.label()),
                     toggle.color(),
                     toggle.width(),
                     BUTTON_HEIGHT,
@@ -91,7 +91,7 @@ public final class ChannelBar {
         FlatButton reset = new FlatButton(
                 x,
                 y,
-                Text.of(RESET_LABEL),
+                Component.literal(RESET_LABEL),
                 RESET_COLOR,
                 RESET_WIDTH,
                 BUTTON_HEIGHT,
@@ -116,7 +116,7 @@ public final class ChannelBar {
                 MARGIN,
                 screenHeight - INDICATOR_ROW_OFFSET,
                 true,
-                Text.of(""),
+                Component.literal(""),
                 INDICATOR_COLOR,
                 INDICATOR_COLOR,
                 0,
@@ -137,11 +137,11 @@ public final class ChannelBar {
         if (command == null)
             return;
 
-        MinecraftClient client = MinecraftClient.getInstance();
+        Minecraft client = Minecraft.getInstance();
         if (client.player == null)
             return;
 
-        client.player.networkHandler.sendChatCommand(command);
+        client.player.connection.sendCommand(command);
     }
 
     private static void showOnly(List<FlatToggleButton> toggles, int index) {

@@ -1,7 +1,7 @@
 package net.shinyshoe.cavernChat.client.util;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ServerInfo;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ServerData;
 
 public final class ServerUtils {
     private static final String CAVERN_DOMAIN = "thecavern.net";
@@ -10,10 +10,10 @@ public final class ServerUtils {
     }
 
     public static boolean isCavern() {
-        MinecraftClient client = MinecraftClient.getInstance();
-        ServerInfo info = client.getCurrentServerEntry();
+        Minecraft client = Minecraft.getInstance();
+        ServerData info = client.getCurrentServer();
         if (info == null)
             return false;
-        return info.address.endsWith(CAVERN_DOMAIN);
+        return info.ip.endsWith(CAVERN_DOMAIN);
     }
 }

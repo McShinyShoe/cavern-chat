@@ -24,12 +24,15 @@ public final class ConfigApplier {
         MODES.put(ChatType.VOTE, () -> config().serverMessages.vote);
         MODES.put(ChatType.MOTD, () -> config().serverMessages.motd);
         MODES.put(ChatType.CRATE_OPEN, () -> config().serverMessages.crateOpen);
+        MODES.put(ChatType.PLAYER_DEATH, () -> config().serverMessages.playerDeath);
 
         MODES.put(ChatType.LOTTERY, () -> config().pluginMessages.lottery);
         MODES.put(ChatType.COINFLIP, () -> config().pluginMessages.coinFlip);
 
         MODES.put(ChatType.MOFOOD_CHARITY, () -> config().moFoodMessages.moFoodCharity);
         MODES.put(ChatType.MOFOOD_REROLL_QUEST, () -> config().moFoodMessages.moFoodRerollQuest);
+        MODES.put(ChatType.MOFOOD_REROLL_BOOSTED_CONSUMABLE,
+                () -> config().moFoodMessages.moFoodRerollBoostedConsumable);
         MODES.put(ChatType.MOFOOD_NEW_SEASON, () -> config().moFoodMessages.moFoodNewSeason);
 
         MODES.put(ChatType.SLIMEFUN_ITEM_DISABLED, () -> config().slimefunMessages.slimefunItemDisabled);

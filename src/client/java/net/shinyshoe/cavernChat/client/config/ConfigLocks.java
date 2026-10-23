@@ -1,6 +1,10 @@
 package net.shinyshoe.cavernChat.client.config;
 
+//? if >=26.1 {
+/*import me.shedaniel.autoconfig.AutoConfigClient;
+*///?} else {
 import me.shedaniel.autoconfig.AutoConfig;
+//?}
 import me.shedaniel.autoconfig.gui.registry.GuiRegistry;
 import me.shedaniel.autoconfig.gui.registry.api.GuiTransformer;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
@@ -18,7 +22,11 @@ public final class ConfigLocks {
 
     /** Has to run after the config itself is registered. */
     public static void register() {
+        //? if >=26.1 {
+        /*GuiRegistry registry = AutoConfigClient.getGuiRegistry(CavernChatConfig.class);
+        *///?} else {
         GuiRegistry registry = AutoConfig.getGuiRegistry(CavernChatConfig.class);
+        //?}
 
         registry.registerAnnotationTransformer(lockedUnless(() -> false), ReadOnly.class);
         registry.registerAnnotationTransformer(

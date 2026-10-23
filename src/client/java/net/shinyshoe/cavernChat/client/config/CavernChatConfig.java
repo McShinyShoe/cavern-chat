@@ -69,6 +69,8 @@ public class CavernChatConfig implements ConfigData {
         public FilterMode motd = FilterMode.DYNAMIC;
         @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
         public FilterMode crateOpen = FilterMode.DYNAMIC;
+        @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+        public FilterMode playerDeath = FilterMode.DYNAMIC;
     }
 
     public static class PluginMessages {
@@ -83,6 +85,8 @@ public class CavernChatConfig implements ConfigData {
         public FilterMode moFoodCharity = FilterMode.DYNAMIC;
         @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
         public FilterMode moFoodRerollQuest = FilterMode.DYNAMIC;
+        @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+        public FilterMode moFoodRerollBoostedConsumable = FilterMode.DYNAMIC;
         @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
         public FilterMode moFoodNewSeason = FilterMode.DYNAMIC;
     }

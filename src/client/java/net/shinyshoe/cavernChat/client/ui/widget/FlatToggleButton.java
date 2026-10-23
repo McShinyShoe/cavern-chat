@@ -1,26 +1,30 @@
 package net.shinyshoe.cavernChat.client.ui.widget;
 
 //? if >=1.21.9 {
-import net.minecraft.client.gui.Click;
-//?} else {
-/*import net.minecraft.client.gui.screen.Screen;
-*///?}
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.navigation.GuiNavigation;
-import net.minecraft.client.gui.navigation.GuiNavigationPath;
-import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
-import net.minecraft.client.gui.screen.narration.NarrationPart;
-import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.text.Text;
+/*import net.minecraft.client.input.MouseButtonEvent;
+*///?} else {
+import net.minecraft.client.gui.screens.Screen;
+//?}
+//? if >=26.1 {
+/*import net.minecraft.client.gui.GuiGraphicsExtractor;
+*///?} else {
+import net.minecraft.client.gui.GuiGraphics;
+//?}
+import net.minecraft.client.gui.ComponentPath;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.narration.NarratedElementType;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.gui.navigation.FocusNavigationEvent;
+import net.minecraft.network.chat.Component;
 
-public class FlatToggleButton extends ClickableWidget {
+public class FlatToggleButton extends AbstractWidget {
 
     private static final int DEFAULT_COLOR_ACTIVE = 0xFFFFFFFF;
     private static final int DEFAULT_COLOR_INACTIVE = 0xFFAAAAAA;
 
     private boolean enabled;
-    private Text labelActive;
-    private Text labelInactive;
+    private Component labelActive;
+    private Component labelInactive;
     private int colorActive;
     private int colorInactive;
     private final Runnable onEnable;
@@ -28,40 +32,40 @@ public class FlatToggleButton extends ClickableWidget {
     private final Runnable onShiftClick;
     private final Runnable onCtrlClick;
 
-    public FlatToggleButton(int x, int y, boolean enabled, Text label, int width, int height, Runnable onEnable,
+    public FlatToggleButton(int x, int y, boolean enabled, Component label, int width, int height, Runnable onEnable,
             Runnable onDisable, Runnable onShiftClick, Runnable onCtrlClick) {
         this(x, y, enabled, label, label, DEFAULT_COLOR_ACTIVE, DEFAULT_COLOR_INACTIVE, width, height,
                 onEnable, onDisable, onShiftClick, onCtrlClick);
     }
 
-    public FlatToggleButton(int x, int y, boolean enabled, Text labelActive, Text labelInactive, int width, int height,
-            Runnable onEnable, Runnable onDisable, Runnable onShiftClick, Runnable onCtrlClick) {
+    public FlatToggleButton(int x, int y, boolean enabled, Component labelActive, Component labelInactive, int width,
+            int height, Runnable onEnable, Runnable onDisable, Runnable onShiftClick, Runnable onCtrlClick) {
         this(x, y, enabled, labelActive, labelInactive, DEFAULT_COLOR_ACTIVE, DEFAULT_COLOR_INACTIVE, width, height,
                 onEnable, onDisable, onShiftClick, onCtrlClick);
     }
 
-    public FlatToggleButton(int x, int y, boolean enabled, Text label, int color, int width, int height,
+    public FlatToggleButton(int x, int y, boolean enabled, Component label, int color, int width, int height,
             Runnable onEnable, Runnable onDisable, Runnable onShiftClick, Runnable onCtrlClick) {
         this(x, y, enabled, label, label, color, DEFAULT_COLOR_INACTIVE, width, height,
                 onEnable, onDisable, onShiftClick, onCtrlClick);
     }
 
-    public FlatToggleButton(int x, int y, boolean enabled, Text labelActive, Text labelInactive, int color, int width,
-            int height, Runnable onEnable, Runnable onDisable, Runnable onShiftClick, Runnable onCtrlClick) {
+    public FlatToggleButton(int x, int y, boolean enabled, Component labelActive, Component labelInactive, int color,
+            int width, int height, Runnable onEnable, Runnable onDisable, Runnable onShiftClick, Runnable onCtrlClick) {
         this(x, y, enabled, labelActive, labelInactive, color, DEFAULT_COLOR_INACTIVE, width, height,
                 onEnable, onDisable, onShiftClick, onCtrlClick);
     }
 
-    public FlatToggleButton(int x, int y, boolean enabled, Text label, int colorActive, int colorInactive, int width,
-            int height, Runnable onEnable, Runnable onDisable, Runnable onShiftClick, Runnable onCtrlClick) {
+    public FlatToggleButton(int x, int y, boolean enabled, Component label, int colorActive, int colorInactive,
+            int width, int height, Runnable onEnable, Runnable onDisable, Runnable onShiftClick, Runnable onCtrlClick) {
         this(x, y, enabled, label, label, colorActive, colorInactive, width, height,
                 onEnable, onDisable, onShiftClick, onCtrlClick);
     }
 
-    public FlatToggleButton(int x, int y, boolean enabled, Text labelActive, Text labelInactive, int colorActive,
-            int colorInactive, int width, int height, Runnable onEnable, Runnable onDisable, Runnable onShiftClick,
-            Runnable onCtrlClick) {
-        super(x, y, width, height, Text.empty());
+    public FlatToggleButton(int x, int y, boolean enabled, Component labelActive, Component labelInactive,
+            int colorActive, int colorInactive, int width, int height, Runnable onEnable, Runnable onDisable,
+            Runnable onShiftClick, Runnable onCtrlClick) {
+        super(x, y, width, height, Component.empty());
         this.enabled = enabled;
         this.labelActive = labelActive;
         this.labelInactive = labelInactive;
@@ -74,24 +78,28 @@ public class FlatToggleButton extends ClickableWidget {
     }
 
     @Override
-    protected void renderWidget(DrawContext ctx, int mouseX, int mouseY, float delta) {
+    //? if >=26.1 {
+    /*protected void extractWidgetRenderState(GuiGraphicsExtractor ctx, int mouseX, int mouseY, float delta) {
+    *///?} else {
+    protected void renderWidget(GuiGraphics ctx, int mouseX, int mouseY, float delta) {
+    //?}
         WidgetStyle.renderBackground(ctx, this, isHovered());
         WidgetStyle.renderLabel(ctx, this, enabled ? labelActive : labelInactive,
                 enabled ? colorActive : colorInactive);
     }
 
     //? if >=1.21.9 {
-    @Override
-    public void onClick(Click click, boolean doubled) {
-        if (!click.hasShift() && !click.hasCtrl())
+    /*@Override
+    public void onClick(MouseButtonEvent click, boolean doubled) {
+        if (!click.hasShiftDown() && !click.hasControlDown())
             toggle();
-        if (click.hasShift())
+        if (click.hasShiftDown())
             this.onShiftClick.run();
-        if (click.hasCtrl())
+        if (click.hasControlDown())
             this.onCtrlClick.run();
     }
-    //?} else {
-    /*@Override
+    *///?} else {
+    @Override
     public void onClick(double mouseX, double mouseY) {
         if (!Screen.hasShiftDown() && !Screen.hasControlDown())
             toggle();
@@ -100,13 +108,13 @@ public class FlatToggleButton extends ClickableWidget {
         if (Screen.hasControlDown())
             this.onCtrlClick.run();
     }
-    *///?}
+    //?}
 
     @Override
-    protected void appendClickableNarrations(NarrationMessageBuilder builder) {
-        builder.put(
-                NarrationPart.TITLE,
-                Text.literal(labelActive.getString() + (enabled ? " enabled" : " disabled")));
+    protected void updateWidgetNarration(NarrationElementOutput builder) {
+        builder.add(
+                NarratedElementType.TITLE,
+                Component.literal(labelActive.getString() + (enabled ? " enabled" : " disabled")));
     }
 
     public boolean isEnabled() {
@@ -127,7 +135,7 @@ public class FlatToggleButton extends ClickableWidget {
     }
 
     @Override
-    public GuiNavigationPath getNavigationPath(GuiNavigation navigation) {
+    public ComponentPath nextFocusPath(FocusNavigationEvent navigation) {
         return null;
     }
 
@@ -137,23 +145,23 @@ public class FlatToggleButton extends ClickableWidget {
             super.setFocused(false);
     }
 
-    public Text getLabelActive() {
+    public Component getLabelActive() {
         return labelActive;
     }
 
-    public Text getLabelInactive() {
+    public Component getLabelInactive() {
         return labelInactive;
     }
 
-    public void setLabelActive(Text labelActive) {
+    public void setLabelActive(Component labelActive) {
         this.labelActive = labelActive;
     }
 
-    public void setLabelInactive(Text labelInactive) {
+    public void setLabelInactive(Component labelInactive) {
         this.labelInactive = labelInactive;
     }
 
-    public void setLabel(Text label) {
+    public void setLabel(Component label) {
         setLabelActive(label);
         setLabelInactive(label);
     }

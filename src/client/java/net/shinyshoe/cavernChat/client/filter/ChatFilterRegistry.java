@@ -1,7 +1,8 @@
 package net.shinyshoe.cavernChat.client.filter;
 
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.shinyshoe.cavernChat.client.util.ColorUtils;
 import net.shinyshoe.cavernChat.client.util.TextUtils;
 
 import java.util.Collection;
@@ -16,10 +17,10 @@ public final class ChatFilterRegistry {
 
     private static final int COLOR_LOCAL = 0xFFD700;
     private static final int COLOR_PARTY = 0xDF9EFF;
-    private static final int COLOR_TOWN = Formatting.GREEN.getColorValue();
-    private static final int COLOR_NATION = Formatting.GOLD.getColorValue();
-    private static final int COLOR_ADMIN = Formatting.BLUE.getColorValue();
-    private static final int COLOR_SEPARATOR = Formatting.GRAY.getColorValue();
+    private static final int COLOR_TOWN = ColorUtils.rgbOf(ChatFormatting.GREEN);
+    private static final int COLOR_NATION = ColorUtils.rgbOf(ChatFormatting.GOLD);
+    private static final int COLOR_ADMIN = ColorUtils.rgbOf(ChatFormatting.BLUE);
+    private static final int COLOR_SEPARATOR = ColorUtils.rgbOf(ChatFormatting.GRAY);
 
     private static final Map<ChatType, ChatFilter> FILTERS = new LinkedHashMap<>();
 
@@ -56,13 +57,17 @@ public final class ChatFilterRegistry {
         define(ChatType.LOTTERY, startsWith("LOTTERY"));
         define(ChatType.COINFLIP, contains("ᴄᴏɪɴꜰʟɪᴘ"));
 
-        define(ChatType.MOFOOD_CHARITY, startsWith("Charity"));
+        define(ChatType.MOFOOD_CHARITY, startsWith("ᴄʜᴀʀɪᴛʏ"));
         define(ChatType.MOFOOD_REROLL_QUEST, startsWith("MoFood").and(contains("rerolled the Quest")));
+        define(ChatType.MOFOOD_REROLL_BOOSTED_CONSUMABLE,
+                startsWith("MoFood").and(contains("rerolled the Boosted Consumable")));
         define(ChatType.MOFOOD_NEW_SEASON, startsWith("▅").and(contains("New Season")));
 
         define(ChatType.SLIMEFUN_ITEM_DISABLED, startsWith("Slimefun 4> [This Item"));
 
         define(ChatType.DUNGEON_DROWNED_PIRATE, startsWith("Drowned Pirate"));
+
+        define(ChatType.PLAYER_DEATH, startsWith("☠ "));
 
         // Registered last: "Other" is whatever no earlier rule claimed.
         define(ChatType.MESSAGE_OTHER, text -> {
@@ -85,19 +90,19 @@ public final class ChatFilterRegistry {
         return FILTERS.values();
     }
 
-    private static void define(ChatType type, Predicate<Text> rule) {
+    private static void define(ChatType type, Predicate<Component> rule) {
         FILTERS.put(type, new ChatFilter(type, rule));
     }
 
-    private static boolean isPlayerChat(Text text) {
+    private static boolean isPlayerChat(Component text) {
         return TextUtils.hasColoredChar(text, '»', COLOR_SEPARATOR);
     }
 
-    private static Predicate<Text> startsWith(String prefix) {
+    private static Predicate<Component> startsWith(String prefix) {
         return text -> text.getString().startsWith(prefix);
     }
 
-    private static Predicate<Text> contains(String needle) {
+    private static Predicate<Component> contains(String needle) {
         return text -> text.getString().contains(needle);
     }
 }

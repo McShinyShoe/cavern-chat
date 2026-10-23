@@ -1,9 +1,9 @@
 package net.shinyshoe.cavernChat.client.ui;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.screen.ChatScreen;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.screens.ChatScreen;
+import net.minecraft.network.chat.Component;
 import net.shinyshoe.cavernChat.client.channel.ChannelRegistry;
 import net.shinyshoe.cavernChat.client.channel.ChannelTracker;
 import net.shinyshoe.cavernChat.client.channel.ChatChannel;
@@ -36,7 +36,7 @@ public final class ChannelIndicator {
         COMMAND_CHANNELS.put("/a ", ChannelRegistry.ADMIN);
     }
 
-    private static Text text;
+    private static Component text;
     private static Integer inputColor;
 
     private ChannelIndicator() {
@@ -59,7 +59,7 @@ public final class ChannelIndicator {
             return;
         }
 
-        show(Text.literal(channel.name()).withColor(channel.color()), channel.color());
+        show(Component.literal(channel.name()).withColor(channel.color()), channel.color());
     }
 
     private static void updateForCommand(String typed) {
@@ -68,11 +68,10 @@ public final class ChannelIndicator {
                 continue;
 
             ChatChannel channel = entry.getValue();
-            // Without admin features the tag stays off, the command still sends.
             if (channel == ChannelRegistry.ADMIN && !CavernChatConfig.getInstance().adminFeatures)
                 break;
 
-            show(Text.literal(channel.name()), channel.color());
+            show(Component.literal(channel.name()), channel.color());
             return;
         }
 
@@ -80,7 +79,7 @@ public final class ChannelIndicator {
             String lastPerson = CavernChatConfig.getInstance().lastDMPerson;
             if (lastPerson == null)
                 return;
-            show(Text.literal(lastPerson), DirectMessages.colorFor(lastPerson));
+            show(Component.literal(lastPerson), DirectMessages.colorFor(lastPerson));
             return;
         }
 
@@ -92,8 +91,8 @@ public final class ChannelIndicator {
         if (text == null)
             return 0;
 
-        TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
-        return textRenderer.getWidth(text) + LABEL_PADDING;
+        Font textRenderer = Minecraft.getInstance().font;
+        return textRenderer.width(text) + LABEL_PADDING;
     }
 
     /** How far the chat box moves right. */
@@ -102,7 +101,7 @@ public final class ChannelIndicator {
         return width == 0 ? 0 : width + LABEL_GAP;
     }
 
-    public static Text getText() {
+    public static Component getText() {
         return text;
     }
 
@@ -114,16 +113,20 @@ public final class ChannelIndicator {
         return inputColor == null ? null : OPAQUE + inputColor;
     }
 
-    private static void show(Text label, Integer color) {
+    private static void show(Component label, Integer color) {
         text = label;
         inputColor = color;
     }
 
     private static String typedText() {
-        MinecraftClient client = MinecraftClient.getInstance();
-        if (!(client.currentScreen instanceof ChatScreen chat))
+        Minecraft client = Minecraft.getInstance();
+        //? if >=26.2 {
+        /*if (!(client.gui.screen() instanceof ChatScreen chat))
+        *///?} else {
+        if (!(client.screen instanceof ChatScreen chat))
+        //?}
             return null;
 
-        return ((ChatScreenAccessor) chat).getChatField().getText();
+        return ((ChatScreenAccessor) chat).getChatField().getValue();
     }
 }

@@ -4,7 +4,7 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.util.ActionResult;
+import net.minecraft.world.InteractionResult;
 import net.shinyshoe.cavernChat.client.config.CavernChatConfig;
 import net.shinyshoe.cavernChat.client.config.ConfigApplier;
 import net.shinyshoe.cavernChat.client.config.ConfigLocks;
@@ -24,9 +24,9 @@ public class CavernChatClient implements ClientModInitializer {
         applyConfig(holder.get());
     }
 
-    private static ActionResult onConfigChanged(ConfigHolder<CavernChatConfig> holder, CavernChatConfig config) {
+    private static InteractionResult onConfigChanged(ConfigHolder<CavernChatConfig> holder, CavernChatConfig config) {
         applyConfig(config);
-        return ActionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     private static void applyConfig(CavernChatConfig config) {

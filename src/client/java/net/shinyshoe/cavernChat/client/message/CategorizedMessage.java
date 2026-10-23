@@ -1,8 +1,12 @@
 package net.shinyshoe.cavernChat.client.message;
 
-import net.minecraft.client.gui.hud.ChatHudLine;
+//? if >=26.1 {
+/*import net.minecraft.client.multiplayer.chat.GuiMessage;
+*///?} else {
+import net.minecraft.client.GuiMessage;
+//?}
 import net.shinyshoe.cavernChat.client.filter.ChatType;
 
-/** A {@link ChatHudLine} that is categorized. */
-public record CategorizedMessage(ChatType type, ChatHudLine message) {
+/** A {@link GuiMessage} that is categorized. */
+public record CategorizedMessage(ChatType type, GuiMessage message) {
 }
