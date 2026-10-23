@@ -32,6 +32,9 @@ Multi-version support uses [Stonecutter](https://stonecutter.kikugie.dev/).
 Each target has its own dependency set in `versions/<mc>/gradle.properties`,
 and version-specific code is gated with `//? if` comments in the shared `src/` tree.
 
+The source uses Mojang's names, since 26.1 and newer ship unobfuscated and there are no Yarn mappings for them.
+Gradle has to run on Java 25 or newer (Loom needs it), the 1.21.x jars still target Java 21.
+
 Build one version:
 
 ```sh
@@ -41,7 +44,7 @@ Build one version:
 Build every version:
 
 ```sh
-./gradlew :1.21.1:build :1.21.3:build :1.21.4:build :1.21.5:build :1.21.8:build :1.21.10:build :1.21.11:build
+./gradlew :1.21.1:build :1.21.3:build :1.21.4:build :1.21.5:build :1.21.8:build :1.21.10:build :1.21.11:build :26.1.2:build :26.2:build :26.3:build
 ```
 
 Jars are written to `versions/<mc>/build/libs/`.
