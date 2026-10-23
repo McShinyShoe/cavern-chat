@@ -1,7 +1,11 @@
 plugins {
-    id 'fabric-loom' version '1.14-SNAPSHOT'
     id 'maven-publish'
 }
+
+// 26.1 and up ship unobfuscated, so they get the Loom that doesnt remap anything
+def unobfuscated = stonecutter.eval(stonecutter.current.version, ">=26.1")
+apply plugin: unobfuscated ? 'net.fabricmc.fabric-loom' : 'net.fabricmc.fabric-loom-remap'
+def targetJavaVersion = unobfuscated ? 25 : 21
 
 version = "${project.mod_version}+${project.minecraft_version}"
 group = project.maven_group
@@ -40,13 +44,23 @@ repositories {
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    modApi "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}"
-    modCompileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
-    modRuntimeOnly  "com.terraformersmc:modmenu:${project.modmenu_version}"
+    if (unobfuscated) {
+        implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+        implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+        api "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}"
+        compileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
+        runtimeOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
+    } else {
+        mappings loom.officialMojangMappings()
+        modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+        modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+        modApi "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}"
+        modCompileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
+        modRuntimeOnly  "com.terraformersmc:modmenu:${project.modmenu_version}"
+    }
 }
 
 processResources {
@@ -64,7 +78,15 @@ processResources {
     }
 }
 
-def targetJavaVersion = 21
+// main and client both have a mixin config, so this has to hit every resource task
+tasks.withType(ProcessResources).configureEach {
+    inputs.property "java_version", targetJavaVersion
+
+    filesMatching("*.mixins.json") {
+        expand "java_version": targetJavaVersion
+    }
+}
+
 tasks.withType(JavaCompile).configureEach {
     // ensure that the encoding is set to UTF-8, no matter what the system default is
     // this fixes some edge cases with special characters not displaying correctly

@@ -1,10 +1,14 @@
 package net.shinyshoe.cavernChat.mixin.client;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.ChatScreen;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.text.Text;
+//? if >=26.1 {
+/*import net.minecraft.client.gui.GuiGraphicsExtractor;
+*///?} else {
+import net.minecraft.client.gui.GuiGraphics;
+//?}
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.screens.ChatScreen;
+import net.minecraft.network.chat.Component;
 import net.shinyshoe.cavernChat.client.ui.ChannelBar;
 import net.shinyshoe.cavernChat.client.ui.ChannelIndicator;
 import net.shinyshoe.cavernChat.client.ui.widget.FlatToggleButton;
@@ -22,7 +26,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ChatScreenMixin {
 
     @Shadow
-    protected TextFieldWidget chatField;
+    protected EditBox input;
 
     @Unique
     private FlatToggleButton cavernChat$channelIndicator;
@@ -33,7 +37,7 @@ public abstract class ChatScreenMixin {
             return;
 
         ChatScreen self = (ChatScreen) (Object) this;
-        if (MinecraftClient.getInstance().player == null)
+        if (Minecraft.getInstance().player == null)
             return;
 
         ChannelBar.Widgets bar = ChannelBar.create(self.height);
@@ -49,25 +53,35 @@ public abstract class ChatScreenMixin {
             screen.invokeAddDrawableChild(toggle);
     }
 
+    //? if >=26.1 {
+    /*@Inject(method = "extractRenderState", at = @At("HEAD"))
+    private void cavernChat$updateIndicator(GuiGraphicsExtractor context, int mouseX, int mouseY, float deltaTicks,
+    *///?} else {
     @Inject(method = "render", at = @At("HEAD"))
-    private void cavernChat$updateIndicator(DrawContext context, int mouseX, int mouseY, float deltaTicks,
+    private void cavernChat$updateIndicator(GuiGraphics context, int mouseX, int mouseY, float deltaTicks,
+    //?}
             CallbackInfo ci) {
         ChannelIndicator.update();
     }
 
     /** Sizes the channel tag and slides the chat box out from behind it. */
+    //? if >=26.1 {
+    /*@Inject(method = "extractRenderState", at = @At("TAIL"))
+    private void cavernChat$layoutChatField(GuiGraphicsExtractor context, int mouseX, int mouseY, float deltaTicks,
+    *///?} else {
     @Inject(method = "render", at = @At("TAIL"))
-    private void cavernChat$layoutChatField(DrawContext context, int mouseX, int mouseY, float deltaTicks,
+    private void cavernChat$layoutChatField(GuiGraphics context, int mouseX, int mouseY, float deltaTicks,
+    //?}
             CallbackInfo ci) {
         if (!ServerUtils.isCavern())
             return;
 
-        this.chatField.setEditableColor(ChannelIndicator.getEditableColor());
+        this.input.setTextColor(ChannelIndicator.getEditableColor());
 
-        Text label = ChannelIndicator.getText();
+        Component label = ChannelIndicator.getText();
         if (label != null) {
             cavernChat$channelIndicator.setLabel(label);
-            cavernChat$channelIndicator.setDimensions(
+            cavernChat$channelIndicator.setSize(
                     ChannelIndicator.getOffset(),
                     cavernChat$channelIndicator.getHeight());
 
@@ -77,8 +91,8 @@ public abstract class ChatScreenMixin {
         }
 
         int offset = ChannelIndicator.getLayoutOffset();
-        this.chatField.setX(4 + offset);
-        this.chatField.setWidth(((ChatScreen) (Object) this).width - 4 - offset);
+        this.input.setX(4 + offset);
+        this.input.setWidth(((ChatScreen) (Object) this).width - 4 - offset);
 
         cavernChat$channelIndicator.visible = ChannelIndicator.getOffset() != 0;
     }
@@ -87,13 +101,16 @@ public abstract class ChatScreenMixin {
      * Off The Cavern the vanilla input background is redrawn at full width; on
      * it, the left edge is pulled in to leave room for the channel tag.
      */
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;fill(IIIII)V"))
-    private void cavernChat$insetInputBackground(DrawContext context, int x1, int y1, int x2, int y2, int color) {
+    //? if >=26.1 {
+    /*@Redirect(method = "extractRenderState", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;fill(IIIII)V"))
+    private void cavernChat$insetInputBackground(GuiGraphicsExtractor context, int x1, int y1, int x2, int y2,
+            int color) {
+    *///?} else {
+    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;fill(IIIII)V"))
+    private void cavernChat$insetInputBackground(GuiGraphics context, int x1, int y1, int x2, int y2, int color) {
+    //?}
         if (!ServerUtils.isCavern()) {
-            MinecraftClient client = MinecraftClient.getInstance();
-            assert client.currentScreen != null;
-            context.fill(2, client.currentScreen.height - 14, client.currentScreen.width - 2,
-                    client.currentScreen.height - 2, client.options.getTextBackgroundColor(Integer.MIN_VALUE));
+            context.fill(x1, y1, x2, y2, color);
             return;
         }
 

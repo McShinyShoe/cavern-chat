@@ -1,8 +1,12 @@
 package net.shinyshoe.cavernChat.client.message;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.hud.ChatHud;
-import net.minecraft.client.gui.hud.ChatHudLine;
+//? if >=26.1 {
+/*import net.minecraft.client.multiplayer.chat.GuiMessage;
+*///?} else {
+import net.minecraft.client.GuiMessage;
+//?}
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.ChatComponent;
 import net.shinyshoe.cavernChat.CavernChat;
 import net.shinyshoe.cavernChat.client.config.CavernChatConfig;
 import net.shinyshoe.cavernChat.client.filter.ChatFilter;
@@ -26,7 +30,7 @@ public final class ChatHistory {
     }
 
     /** Sorts an incoming line and shows it if its category is currently visible. */
-    public static void add(ChatHudLine message) {
+    public static void add(GuiMessage message) {
         for (ChatFilter filter : ChatFilterRegistry.all()) {
             if (!filter.matches(message.content()))
                 continue;
@@ -61,14 +65,14 @@ public final class ChatHistory {
 
     /** Clears the vanilla chat hud outright, history included. */
     public static void reset() {
-        MinecraftClient client = MinecraftClient.getInstance();
-        if (client == null || client.inGameHud == null)
+        ChatComponent chat = chat();
+        if (chat == null)
             return;
 
-        client.inGameHud.getChatHud().reset();
+        chat.rescaleChat();
     }
 
-    private static void print(ChatType type, ChatHudLine line) {
+    private static void print(ChatType type, GuiMessage line) {
         ChatHudAccessor accessor = accessor();
         if (debugEnabled()) {
             String content = line.content().getString();
@@ -98,11 +102,18 @@ public final class ChatHistory {
     }
 
     private static ChatHudAccessor accessor() {
-        MinecraftClient client = MinecraftClient.getInstance();
-        if (client == null || client.inGameHud == null)
+        return (ChatHudAccessor) chat();
+    }
+
+    private static ChatComponent chat() {
+        Minecraft client = Minecraft.getInstance();
+        if (client == null || client.gui == null)
             return null;
 
-        ChatHud chatHud = client.inGameHud.getChatHud();
-        return (ChatHudAccessor) chatHud;
+        //? if >=26.2 {
+        /*return client.gui.hud.getChat();
+        *///?} else {
+        return client.gui.getChat();
+        //?}
     }
 }

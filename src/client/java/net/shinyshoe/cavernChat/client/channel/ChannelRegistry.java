@@ -1,6 +1,7 @@
 package net.shinyshoe.cavernChat.client.channel;
 
-import net.minecraft.util.Formatting;
+import net.minecraft.ChatFormatting;
+import net.shinyshoe.cavernChat.client.util.ColorUtils;
 
 import java.util.Map;
 
@@ -10,9 +11,9 @@ public final class ChannelRegistry {
     public static final ChatChannel GLOBAL = new ChatChannel(0xFCFCFC, "Global");
     public static final ChatChannel LOCAL = new ChatChannel(0xFFD700, "Local");
     public static final ChatChannel PARTY = new ChatChannel(0xDF9EFF, "Party");
-    public static final ChatChannel TOWN = new ChatChannel(Formatting.GREEN.getColorValue(), "Town");
-    public static final ChatChannel NATION = new ChatChannel(Formatting.GOLD.getColorValue(), "Nation");
-    public static final ChatChannel ADMIN = new ChatChannel(Formatting.BLUE.getColorValue(), "Admin");
+    public static final ChatChannel TOWN = new ChatChannel(ColorUtils.rgbOf(ChatFormatting.GREEN), "Town");
+    public static final ChatChannel NATION = new ChatChannel(ColorUtils.rgbOf(ChatFormatting.GOLD), "Nation");
+    public static final ChatChannel ADMIN = new ChatChannel(ColorUtils.rgbOf(ChatFormatting.BLUE), "Admin");
 
     private static final int DM_COLOR = 0xebc45c;
 

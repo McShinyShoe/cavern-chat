@@ -1,11 +1,15 @@
 package net.shinyshoe.cavernChat.client.message;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.hud.ChatHudLine;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.text.TextColor;
+//? if >=26.1 {
+/*import net.minecraft.client.multiplayer.chat.GuiMessage;
+*///?} else {
+import net.minecraft.client.GuiMessage;
+//?}
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.shinyshoe.cavernChat.client.config.CavernChatConfig;
 import net.shinyshoe.cavernChat.client.config.DirectMessageColor;
 import net.shinyshoe.cavernChat.client.util.ColorUtils;
@@ -41,38 +45,42 @@ public final class DirectMessages {
     /**
      * Recolor the partner's name in their assigned colour and notes who it was.
      */
-    public static ChatHudLine recolor(ChatHudLine line) {
-        String selfName = MinecraftClient.getInstance().getSession().getUsername();
+    public static GuiMessage recolor(GuiMessage line) {
+        String selfName = Minecraft.getInstance().getUser().getName();
         String player = otherParty(line.content().getString(), selfName);
 
         CavernChatConfig.getInstance().lastDMPerson = player;
 
         int dmColor = colorFor(player);
 
-        MutableText recolored = Text.empty();
+        MutableComponent recolored = Component.empty();
         AtomicBoolean inName = new AtomicBoolean(false);
 
         line.content().copy().visit((style, content) -> {
             Style newStyle = style;
             TextColor color = style.getColor();
 
-            if (!inName.get() && color != null && color.getRgb() == SERVER_NAME_COLOR) {
+            if (!inName.get() && color != null && color.getValue() == SERVER_NAME_COLOR) {
                 inName.set(true);
             }
 
             if (inName.get()) {
-                if (color != null && color.getRgb() != SERVER_NAME_COLOR) {
+                if (color != null && color.getValue() != SERVER_NAME_COLOR) {
                     inName.set(false);
                 } else {
                     newStyle = style.withColor(TextColor.fromRgb(dmColor));
                 }
             }
 
-            recolored.append(Text.literal(content).setStyle(newStyle));
+            recolored.append(Component.literal(content).setStyle(newStyle));
             return Optional.empty();
         }, Style.EMPTY);
 
-        return new ChatHudLine(line.creationTick(), recolored, line.signature(), line.indicator());
+        //? if >=26.1 {
+        /*return new GuiMessage(line.addedTime(), recolored, line.signature(), line.source(), line.tag());
+        *///?} else {
+        return new GuiMessage(line.addedTime(), recolored, line.signature(), line.tag());
+        //?}
     }
 
     /**

@@ -1,9 +1,10 @@
 package net.shinyshoe.cavernChat.client.channel;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.shinyshoe.cavernChat.client.config.CavernChatConfig;
+import net.shinyshoe.cavernChat.client.util.ColorUtils;
 import net.shinyshoe.cavernChat.client.util.TextUtils;
 
 /**
@@ -42,7 +43,7 @@ public final class ChannelTracker {
     }
 
     /** Gets the current channel when player first join. */
-    public static void readFrom(Text message) {
+    public static void readFrom(Component message) {
         String line = message.getString();
 
         if (line.contains(JOIN_MARKER))
@@ -52,7 +53,7 @@ public final class ChannelTracker {
             unlockAdminFeatures();
 
         char letter = 0;
-        if (TextUtils.hasColoredChar(message, '✎', Formatting.GOLD.getColorValue())) {
+        if (TextUtils.hasColoredChar(message, '✎', ColorUtils.rgbOf(ChatFormatting.GOLD))) {
             letter = charAt(line, CHANNEL_CHAR_INDEX);
         } else if (line.startsWith(SWITCH_PREFIX)) {
             letter = charAt(line, SWITCH_CHAR_INDEX);
@@ -81,10 +82,10 @@ public final class ChannelTracker {
 
     /** Ask server current and available channel. */
     private static void requestCurrentChannel() {
-        MinecraftClient client = MinecraftClient.getInstance();
+        Minecraft client = Minecraft.getInstance();
         if (client.player == null)
             return;
 
-        client.player.networkHandler.sendChatCommand("channel");
+        client.player.connection.sendCommand("channel");
     }
 }

@@ -1,5 +1,8 @@
 package net.shinyshoe.cavernChat.client.util;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TextColor;
+
 import java.awt.Color;
 
 public final class ColorUtils {
@@ -16,5 +19,10 @@ public final class ColorUtils {
 
         hsv[0] *= 360f;
         return hsv;
+    }
+
+    /** ChatFormatting lost getColor() in 26.2 :I TextColor still knows it on every version. */
+    public static int rgbOf(ChatFormatting formatting) {
+        return TextColor.fromLegacyFormat(formatting).getValue();
     }
 }
