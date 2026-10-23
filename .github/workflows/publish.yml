@@ -1,0 +1,113 @@
+name: Publish
+
+# Runs when a version tag (like 1.5.1) is pushed.
+# Builds every Stonecutter version, uploads them to Modrinth, then makes the GitHub release.
+# Its two jobs so a failed GitHub release can be re-run without uploading to Modrinth again.
+# See HOW-TO-PUBLISH.md
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+permissions:
+  contents: read
+
+env:
+  VERSION: ${{ github.ref_name }}
+
+jobs:
+  modrinth:
+    name: Build and upload to Modrinth
+    runs-on: ubuntu-latest
+    outputs:
+      title: ${{ steps.title.outputs.title }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # full history so we can check the tag is on master
+          fetch-depth: 0
+
+      - name: Check the tag is on master
+        run: |
+          if ! git merge-base --is-ancestor "$(git rev-parse "$VERSION^{commit}")" origin/master; then
+            echo "::error::$VERSION points at a commit thats not on master, push master first then re-run this"
+            exit 1
+          fi
+
+      - name: Check the tag matches mod_version
+        run: |
+          mod_version=$(grep '^mod_version=' gradle.properties | cut -d= -f2 | tr -d '[:space:]')
+          if [ "$mod_version" != "$VERSION" ]; then
+            echo "::error::Tag is $VERSION but gradle.properties has mod_version=$mod_version"
+            exit 1
+          fi
+
+      - name: Check the Modrinth token is set
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: |
+          if [ -z "$MODRINTH_TOKEN" ]; then
+            echo "::error::MODRINTH_TOKEN secret is missing (Settings > Secrets and variables > Actions)"
+            exit 1
+          fi
+
+      # same section build.gradle uses for the Modrinth changelog
+      - name: Pull this version out of CHANGELOG.md
+        run: |
+          mkdir dist
+          awk -v h="## $VERSION" '{ l = $0; sub(/[[:space:]]+$/, "", l) } l == h { f = 1; next } f && /^## / { exit } f' CHANGELOG.md > dist/release-notes.md
+          if [ -z "$(tr -d '[:space:]' < dist/release-notes.md)" ]; then
+            echo "::error::CHANGELOG.md has no \"## $VERSION\" section (or its empty)"
+            exit 1
+          fi
+
+      # "Cavern Chat 1.5.1 - Fabric 1.21-26.3", lowest and highest game version across every versions/<mc>
+      - name: Work out the release title
+        id: title
+        run: |
+          range=$(grep -h '^modrinth_game_versions=' versions/*/gradle.properties | cut -d= -f2 | tr ',' '\n' | sort -V | sed -n '1p;$p' | paste -sd-)
+          echo "title=Cavern Chat $VERSION - Fabric $range" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          # Gradle/Loom needs 25, the 1.21.x jars still target 21
+          java-version: 25
+          cache: gradle
+
+      - name: Build and upload to Modrinth
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: ./gradlew publishMods
+
+      - name: Collect the jars
+        run: cp versions/*/build/libs/cavern-chat-"$VERSION"+*[0-9].jar dist/
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release
+          path: dist/
+
+  github:
+    name: Create the GitHub release
+    needs: modrinth
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: release
+          path: dist
+
+      - name: Create the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TITLE: ${{ needs.modrinth.outputs.title }}
+        run: |
+          gh release create "$VERSION" \
+            --verify-tag \
+            --title "$TITLE" \
+            --notes-file dist/release-notes.md \
+            dist/*.jar

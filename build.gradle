@@ -1,5 +1,6 @@
 plugins {
     id 'maven-publish'
+    id 'me.modmuss50.mod-publish-plugin'
 }
 
 // 26.1 and up ship unobfuscated, so they get the Loom that doesnt remap anything
@@ -130,5 +131,38 @@ publishing {
         // Notice: This block does NOT have the same function as the block in the top level.
         // The repositories here will be used for publishing your artifact, not for
         // retrieving dependencies.
+    }
+}
+
+// Grabs the "## <version>" section out of CHANGELOG.md
+// .github/workflows/publish.yml reads the same section for the GitHub release
+def changelogFor(String version) {
+    def lines = rootProject.file("CHANGELOG.md").readLines()
+    def start = lines.findIndexOf { it.trim() == "## ${version}".toString() }
+    def section = start == -1 ? [] : lines.drop(start + 1).takeWhile { !it.startsWith("## ") }
+    def text = section.join("\n").trim()
+    if (text.isEmpty()) {
+        throw new GradleException("CHANGELOG.md has no \"## ${version}\" section (or its empty)")
+    }
+    return text
+}
+
+// Uploads this version's jar to Modrinth, see HOW-TO-PUBLISH.md
+// Without MODRINTH_TOKEN it only does a dry run, which lands in build/publishMods/
+def releaseJar = unobfuscated ? tasks.named('jar') : tasks.named('remapJar')
+publishMods {
+    file = releaseJar.flatMap { it.archiveFile }
+    modLoaders.add("fabric")
+    type = STABLE
+    displayName = "Cavern Chat ${project.version}"
+    changelog = providers.provider { changelogFor(project.mod_version) }
+    dryRun = providers.environmentVariable("MODRINTH_TOKEN").getOrElse("").isEmpty()
+
+    modrinth {
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+        projectId = "9g4Ya0fk"
+        minecraftVersions.addAll(project.modrinth_game_versions.split(",")*.trim())
+        requires("fabric-api", "cloth-config")
+        optional("modmenu")
     }
 }
